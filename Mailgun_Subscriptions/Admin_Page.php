@@ -336,6 +336,17 @@ class Admin_Page {
 	}
 
 	public function admin_debug() {
+		/*$api = Plugin::instance()->api();;
+		$response = $api->post('lists', array(
+			'address' => 'test@sandbox12a9ae7f0a814564b6ced1e47eac3f6a.mailgun.org',
+			'name' => 'API Test 01',
+			'description' => 'Testing API with invalid domain',
+		));
+		printf(
+			"<div class='debug'><h1>%s</h1><pre>%s</pre></div>",
+			'$response',
+			htmlspecialchars( print_r($response , TRUE ) )
+		); /* */
 	}
 }
  
