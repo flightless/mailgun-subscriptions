@@ -13,6 +13,10 @@ class Plugin {
 	/** @var Admin_Page */
 	private $admin_page = NULL;
 
+	public function api() {
+		return new API(get_option('mailgun_api_key'));
+	}
+
 	public function admin() {
 		return $this->admin_page;
 	}
@@ -26,6 +30,7 @@ class Plugin {
 	private function setup_admin_page() {
 		$this->admin_page = new Admin_Page();
 		add_action( 'admin_menu', array( $this->admin_page, 'register' ), 10, 0 );
+		add_action( 'load-settings_page_'.Admin_Page::MENU_SLUG, array( $this->admin_page, 'refresh_caches' ), 10, 0 );
 	}
 
 	public static function init( $file ) {
