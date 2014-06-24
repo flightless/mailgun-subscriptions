@@ -27,7 +27,7 @@ class Widget extends \WP_Widget {
 		}
 
 		if ( !empty($_GET['mailgun-message']) ) {
-			$this->show_widget_message( $_GET['mailgun-message'] );
+			$this->show_widget_message( $_GET['mailgun-message'], !empty($_GET['mailgun-error']) );
 		}
 
 		if ( empty($_GET['mailgun-message']) || !empty($_GET['mailgun-error']) ) {
@@ -37,8 +37,37 @@ class Widget extends \WP_Widget {
 		echo $args['after_widget'];
 	}
 
-	protected function show_widget_message( $message ) {
-		echo '<p class="mailgun-message">', esc_html($message), '</p>';
+	protected function show_widget_message( $message, $error = FALSE ) {
+		if ( !is_array($message) ) {
+			$message = array($message);
+		}
+		$error_class = $error ? ' error' : '';
+		foreach ( $message as $code ) {
+			echo '<p class="mailgun-message'.$error_class.'">', esc_html($this->get_message_string($code)), '</p>';
+		}
+	}
+
+	protected function get_message_string( $code ) {
+		$message = $code;
+		switch ( $code ) {
+			case 'submitted':
+				$message = __('Please check your email for a link to confirm your subscription.', 'mailgun-subscriptions');
+				break;
+			case 'no-lists':
+				$message = __('Please select a mailing list.', 'mailgun-subscriptions');
+				break;
+			case 'no-email':
+				$message = __('Please enter your email address.', 'mailgun-subscriptions');
+				break;
+			case 'invalid-email':
+				$message = __('Please verify your email address.', 'mailgun-subscriptions');
+				break;
+			default:
+				$message = $code;
+				break;
+		}
+		$message = apply_filters( 'mailgun_message', $message, $code );
+		return $message;
 	}
 
 	protected function do_widget_contents( $instance ) {

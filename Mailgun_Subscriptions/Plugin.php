@@ -16,8 +16,12 @@ class Plugin {
 	/** @var Submission_Handler */
 	private $submission_handler = NULL;
 
-	public function api() {
-		return new API(get_option('mailgun_api_key'));
+	public function api( $public = FALSE ) {
+		if ( $public ) {
+			return new API(get_option('mailgun_api_public_key'));
+		} else {
+			return new API(get_option('mailgun_api_key'));
+		}
 	}
 
 	public function admin() {
@@ -31,6 +35,7 @@ class Plugin {
 	private function setup( $plugin_file ) {
 		self::$plugin_file = $plugin_file;
 		spl_autoload_register( array( __CLASS__, 'autoload' ) );
+		add_action( 'init', array( $this, 'setup_confirmations' ) );
 		$this->setup_admin_page();
 		$this->setup_widget();
 		if ( !empty($_REQUEST['mailgun-action']) ) {
@@ -46,6 +51,11 @@ class Plugin {
 
 	private function setup_widget() {
 		add_action( 'widgets_init', array( __NAMESPACE__.'\\Widget', 'register' ), 10, 0 );
+	}
+
+	public function setup_confirmations() {
+		$pt = new Post_Type_Registrar();
+		$pt->register();
 	}
 
 	private function setup_submission_handler() {

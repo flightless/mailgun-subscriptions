@@ -7,7 +7,7 @@ namespace Mailgun_Subscriptions;
 class API {
 	private $key = '';
 	private $url = '';
-	public function __construct( $apiKey = null, $apiEndpoint = "api.mailgun.net", $apiVersion = "v2", $ssl = true ) {
+	public function __construct( $apiKey, $apiEndpoint = "api.mailgun.net", $apiVersion = "v2", $ssl = true ) {
 		$this->key = $apiKey;
 		$this->url = $this->build_base_url( $apiEndpoint, $apiVersion, $ssl );
 	}
@@ -42,6 +42,16 @@ class API {
 		}
 		$response['body'] = json_decode($response['body']);
 		return $response;
+	}
+
+	public function validate_email( $address ) {
+		$response = $this->get( 'address/validate', array(
+			'address' => $address,
+		));
+		if ( !$response || $response['response']['code'] != 200 ) {
+			return FALSE;
+		}
+		return $response['body']->is_valid;
 	}
 
 	private function build_base_url( $apiEndpoint = "api.mailgun.net", $apiVersion = "v2", $ssl = TRUE ) {

@@ -104,6 +104,7 @@ class Admin_Page {
 			array(
 				'option' => 'mailgun_confirmation_email_template',
 				'description' => __('This email will contain a link for users to confirm their subscriptions.', 'mailgun-subscriptions' ),
+				'default' => Template::CONFIRMATION_EMAIL,
 			)
 		);
 		register_setting(
@@ -120,6 +121,7 @@ class Admin_Page {
 			array(
 				'option' => 'mailgun_welcome_email_template',
 				'description' => __('This email will be sent to users after they confirm their subscription.', 'mailgun-subscriptions' ),
+				'default' => Template::WELCOME_EMAIL,
 			)
 		);
 
