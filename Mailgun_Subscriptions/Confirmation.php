@@ -51,6 +51,7 @@ class Confirmation {
 				'post_status' => 'publish',
 				'post_author' => 0,
 				'post_title' => $this->id,
+				'post_name' => $this->id,
 			));
 		}
 		delete_post_meta( $this->post_id, '_mailgun_subscriber_lists' );
@@ -70,7 +71,7 @@ class Confirmation {
 			$results = get_posts(array(
 				'post_type' => self::POST_TYPE,
 				'post_status' => 'publish',
-				'title' => $this->id,
+				'name' => $this->id,
 				'posts_per_page' => 1,
 				'fields' => 'ids',
 			));

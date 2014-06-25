@@ -81,7 +81,7 @@ class Submission_Handler {
 	}
 
 	protected function get_confirmation_message_template() {
-		$template = get_option( 'mailgun_confirmation_email_template', Template::CONFIRMATION_EMAIL );
+		$template = get_option( 'mailgun_confirmation_email_template', Template::confirmation_email() );
 		return apply_filters( 'mailgun_confirmation_email_template', $template );
 	}
 
@@ -132,8 +132,9 @@ class Submission_Handler {
 
 	protected function get_redirect_base_url() {
 		$url = $_SERVER['REQUEST_URI'];
-		$url = remove_query_arg('mailgun-message', $url);
-		$url = remove_query_arg('mailgun-error', $url);
+		foreach ( array('mailgun-message', 'mailgun-error', 'mailgun-action', 'ref') as $key ) {
+			$url = remove_query_arg('key', $url);
+		}
 		return $url;
 	}
 } 

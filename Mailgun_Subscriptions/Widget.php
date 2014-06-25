@@ -26,86 +26,19 @@ class Widget extends \WP_Widget {
 			echo $args['after_title'];
 		}
 
-		if ( !empty($_GET['mailgun-message']) ) {
-			$this->show_widget_message( $_GET['mailgun-message'], !empty($_GET['mailgun-error']) );
-		}
-
-		if ( empty($_GET['mailgun-message']) || !empty($_GET['mailgun-error']) ) {
-			$this->do_widget_contents( $instance );
-		}
-
-		echo $args['after_widget'];
-	}
-
-	protected function show_widget_message( $message, $error = FALSE ) {
-		if ( !is_array($message) ) {
-			$message = array($message);
-		}
-		$error_class = $error ? ' error' : '';
-		foreach ( $message as $code ) {
-			echo '<p class="mailgun-message'.$error_class.'">', esc_html($this->get_message_string($code)), '</p>';
-		}
-	}
-
-	protected function get_message_string( $code ) {
-		$message = $code;
-		switch ( $code ) {
-			case 'submitted':
-				$message = __('Please check your email for a link to confirm your subscription.', 'mailgun-subscriptions');
-				break;
-			case 'no-lists':
-				$message = __('Please select a mailing list.', 'mailgun-subscriptions');
-				break;
-			case 'no-email':
-				$message = __('Please enter your email address.', 'mailgun-subscriptions');
-				break;
-			case 'invalid-email':
-				$message = __('Please verify your email address.', 'mailgun-subscriptions');
-				break;
-			default:
-				$message = $code;
-				break;
-		}
-		$message = apply_filters( 'mailgun_message', $message, $code );
-		return $message;
-	}
-
-	protected function do_widget_contents( $instance ) {
-		static $widget_counter = 0;
-		$widget_counter++;
-
 		$content = apply_filters( 'widget_description', $instance['content'], $instance, $this->id_base );
 		$content = apply_filters( 'the_content', $content );
 		if ( $content ) {
-			echo '<div class="mailgun-widget-description">', $content, '</div>';
+			$content = '<div class="mailgun-widget-description">' . $content . '</div>';
 		}
-		echo '<form class="mailgun-subscription-form" method="post" action="">';
-		echo '<input type="hidden" name="mailgun-action" value="subscribe" />';
-		echo '<ul class="mailgun-widget-lists">';
-		foreach ( $instance['lists'] as $address ) {
-			$list = new Mailing_List($address);
-			if ( $list->is_hidden() ) {
-				continue;
-			}
-			echo '<li>';
-			printf( '<label><input type="checkbox" value="%s" name="mailgun-lists[]" /> %s</label>', esc_attr($list->get_address()), esc_html($list->get_name()) );
-			if ( $description = $list->get_description() ) {
-				printf( '<p class="description">%s</p>', $description );
-			}
-			echo '</li>';
-		}
-		echo '</ul>';
-		echo '<p class="email-address">';
-		printf( '<label for="mailgun-email-address-%d">%s</label>', $widget_counter, __('Email Address', 'mailgun-subscriptions') );
-		$default_email = '';
-		if ( is_user_logged_in() ) {
-			$user = wp_get_current_user();
-			$default_email = $user->user_email;
-		}
-		printf( '<input type="text" value="%s" name="mailgun-subscriber-email" size="20" />', $default_email );
-		echo '</p>';
-		printf( '<p class="submit"><input type="submit" value="%s" /></p>', __('Subscribe', 'mailgun-subscriptions') );
-		echo '</form>';
+
+		$form = new Subscription_Form();
+		$form->display(array(
+			'description' => $content,
+			'lists' => $instance['lists'],
+		));
+
+		echo $args['after_widget'];
 	}
 
 	public function update( $new_instance, $old_instance ) {

@@ -19,6 +19,9 @@ class Plugin {
 	/** @var Confirmation_Handler */
 	private $confirmation_handler = NULL;
 
+	/** @var Shortcode_Handler */
+	private $shortcode_handler = NULL;
+
 	public function api( $public = FALSE ) {
 		if ( $public ) {
 			return new API(get_option('mailgun_api_public_key'));
@@ -39,17 +42,28 @@ class Plugin {
 		return $this->confirmation_handler;
 	}
 
+	public function shortcode_handler() {
+		return $this->shortcode_handler;
+	}
+
 	private function setup( $plugin_file ) {
 		self::$plugin_file = $plugin_file;
 		spl_autoload_register( array( __CLASS__, 'autoload' ) );
-		add_action( 'init', array( $this, 'setup_confirmations' ) );
-		$this->setup_admin_page();
-		$this->setup_widget();
-		if ( !empty($_POST['mailgun-action']) && $_POST['mailgun-action'] == 'subscribe' ) {
-			$this->setup_submission_handler();
+		if ( is_admin() ) {
+			$this->setup_admin_page();
 		}
-		if ( !empty($_GET['mailgun-action']) && $_GET['mailgun-action'] == 'confirm' ) {
-			$this->setup_confirmation_handler();
+		add_action( 'init', array( $this, 'setup_confirmations' ) );
+		$this->setup_widget();
+
+		if ( !is_admin() ) {
+			if ( !empty($_POST['mailgun-action']) && $_POST['mailgun-action'] == 'subscribe' ) {
+				$this->setup_submission_handler();
+			}
+			if ( !empty($_GET['mailgun-action']) && $_GET['mailgun-action'] == 'confirm' ) {
+				$this->setup_confirmation_handler();
+			}
+
+			add_action( 'wp', array( $this, 'setup_confirmation_page' ), 10, 0 );
 		}
 	}
 
@@ -76,6 +90,20 @@ class Plugin {
 	private function setup_submission_handler() {
 		$this->submission_handler = new Submission_Handler($_POST);
 		add_action( 'parse_request', array( $this->submission_handler, 'handle_request' ), 10, 0 );
+	}
+
+	public function setup_confirmation_page() {
+		if ( is_page() && get_queried_object_id() == get_option('mailgun_confirmation_page', 0) ) {
+			$this->shortcode_handler = new Shortcode_Handler();
+			$this->shortcode_handler->register_shortcodes();
+
+			if ( !$this->confirmation_handler ) {
+				$this->setup_confirmation_handler();
+				$this->confirmation_handler->handle_request(); // sets up error messages
+			}
+
+			add_filter( 'the_post', array( $this->confirmation_handler, 'setup_page_data' ), 10, 1 );
+		}
 	}
 
 	public function get_lists( $orderby = 'address' ) {

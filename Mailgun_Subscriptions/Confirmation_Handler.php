@@ -39,6 +39,10 @@ class Confirmation_Handler {
 		return $this->confirmation;
 	}
 
+	public function has_errors() {
+		return !empty($this->errors);
+	}
+
 	protected function get_confirmation_id() {
 		$id = isset( $this->submission['ref'] ) ? $this->submission['ref'] : '';
 		return $id;
@@ -95,7 +99,7 @@ class Confirmation_Handler {
 	}
 
 	protected function get_welcome_message_template() {
-		$template = get_option( 'mailgun_welcome_email_template', Template::WELCOME_EMAIL );
+		$template = get_option( 'mailgun_welcome_email_template', Template::welcome_email() );
 		return apply_filters( 'mailgun_welcome_email_template', $template );
 	}
 
@@ -109,5 +113,64 @@ class Confirmation_Handler {
 			}
 		}
 		return apply_filters( 'mailgun_welcome_email_lists', implode("\n", $formatted), $requested_lists );
+	}
+
+	public function setup_page_data( $post ) {
+		if ( $post->ID != get_option('mailgun_confirmation_page', 0) ) {
+			return; // not concerned with this post
+		}
+		if ( empty($this->errors) ) {
+			return; // no need to override the confirmation page
+		}
+		$messages = array();
+		if ( !isset($_GET['mailgun-message']) ) { // otherwise we got here from the subscription form
+			foreach ( $this->errors as $error_code ) {
+				$messages[] = '<p class="error">'.$this->get_message($error_code).'</p>';
+			}
+		}
+		$page_content = implode($messages).$this->get_subscription_form();
+		$post->post_content = $page_content;
+		$GLOBALS['pages'] = array( $post->post_content );
+		$post->post_title = apply_filters('mailgun_error_page_title', __('Error Confirming Your Subscription', 'mailgun-subscriptions'));
+	}
+
+	protected function get_message( $code ) {
+		switch ( $code ) {
+			case 'not_found':
+				$message = __('Your request could not be found. Please try again.', 'mailgun-subscriptions');
+				break;
+			case 'no_lists':
+				$message = __('There are no mailing lists associated with your request. Please try again.', 'mailgun-subscriptions');
+				break;
+			case 'already_confirmed':
+				$message = __('You have already confirmed your request.', 'mailgun-subscriptions');
+				break;
+			case 'expired':
+				$message = __('Your request has expired. Please try again.', 'mailgun-subscriptions');
+				break;
+			case 'subscription_failed':
+				$message = __('We experienced a problem setting up your subscription. Please try again.', 'mailgun-subscriptions');
+				break;
+			default:
+				$message = $code;
+				break;
+		}
+		return apply_filters( 'mailgun_message', $message, $code, 'confirmation' );
+	}
+
+	protected function get_subscription_form() {
+		$form = new Subscription_Form();
+		ob_start();
+		$form->display(array(
+			'description' => '',
+			'lists' => $this->get_visible_list_addresses(),
+		));
+		return ob_get_clean();
+	}
+
+	protected function get_visible_list_addresses() {
+		$lists = Plugin::instance()->get_lists('name');
+		$lists = wp_list_filter( $lists, array( 'hidden' => true ), 'NOT' );
+		return array_keys($lists);
 	}
 } 

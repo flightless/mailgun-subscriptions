@@ -104,7 +104,7 @@ class Admin_Page {
 			array(
 				'option' => 'mailgun_confirmation_email_template',
 				'description' => __('This email will contain a link for users to confirm their subscriptions.', 'mailgun-subscriptions' ),
-				'default' => Template::CONFIRMATION_EMAIL,
+				'default' => Template::confirmation_email(),
 			)
 		);
 		register_setting(
@@ -121,7 +121,7 @@ class Admin_Page {
 			array(
 				'option' => 'mailgun_welcome_email_template',
 				'description' => __('This email will be sent to users after they confirm their subscription.', 'mailgun-subscriptions' ),
-				'default' => Template::WELCOME_EMAIL,
+				'default' => Template::welcome_email(),
 			)
 		);
 
@@ -327,7 +327,7 @@ class Admin_Page {
 
 	public function create_new_confirmation_page() {
 		$title = __('Subscription Confirmed', 'mailgun-subscriptions');
-		$content = __('Your subscription has been confirmed. You have been added to the following lists: [mailgun_subscribed_lists]', 'mailgun-subscriptions');
+		$content = Template::confirmation_page();
 		$new_post = array(
 			'post_title' => apply_filters( 'mailgun_confirmation_page_default_title', $title ),
 			'post_content' => apply_filters( 'mailgun_confirmation_page_default_content', $content ),
