@@ -16,6 +16,9 @@ class Plugin {
 	/** @var Submission_Handler */
 	private $submission_handler = NULL;
 
+	/** @var Confirmation_Handler */
+	private $confirmation_handler = NULL;
+
 	public function api( $public = FALSE ) {
 		if ( $public ) {
 			return new API(get_option('mailgun_api_public_key'));
@@ -28,8 +31,12 @@ class Plugin {
 		return $this->admin_page;
 	}
 
-	public function handler() {
+	public function submission_handler() {
 		return $this->submission_handler;
+	}
+
+	public function confirmation_handler() {
+		return $this->confirmation_handler;
 	}
 
 	private function setup( $plugin_file ) {
@@ -38,8 +45,11 @@ class Plugin {
 		add_action( 'init', array( $this, 'setup_confirmations' ) );
 		$this->setup_admin_page();
 		$this->setup_widget();
-		if ( !empty($_REQUEST['mailgun-action']) ) {
+		if ( !empty($_POST['mailgun-action']) && $_POST['mailgun-action'] == 'subscribe' ) {
 			$this->setup_submission_handler();
+		}
+		if ( !empty($_GET['mailgun-action']) && $_GET['mailgun-action'] == 'confirm' ) {
+			$this->setup_confirmation_handler();
 		}
 	}
 
@@ -56,6 +66,11 @@ class Plugin {
 	public function setup_confirmations() {
 		$pt = new Post_Type_Registrar();
 		$pt->register();
+	}
+
+	public function setup_confirmation_handler() {
+		$this->confirmation_handler = new Confirmation_Handler($_GET);
+		add_action( 'parse_request', array( $this->confirmation_handler, 'handle_request' ), 10, 0 );
 	}
 
 	private function setup_submission_handler() {

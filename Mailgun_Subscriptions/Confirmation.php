@@ -10,6 +10,7 @@ class Confirmation {
 	protected $id = '';
 	protected $post_id = '';
 	protected $address = '';
+	protected $confirmed = FALSE;
 	protected $lists = array();
 
 	public function __construct( $confirmation_id = '' ) {
@@ -54,6 +55,7 @@ class Confirmation {
 		}
 		delete_post_meta( $this->post_id, '_mailgun_subscriber_lists' );
 		update_post_meta( $this->post_id, '_mailgun_subscriber_address', $this->address );
+		update_post_meta( $this->post_id, '_mailgun_subscription_confirmed', $this->confirmed );
 		foreach ( $this->lists as $list ) {
 			add_post_meta( $this->post_id, '_mailgun_subscriber_lists', $list );
 		}
@@ -79,9 +81,31 @@ class Confirmation {
 		$this->post_id = reset($results);
 		$this->address = get_post_meta($this->post_id, '_mailgun_subscriber_address', true);
 		$this->lists = get_post_meta($this->post_id, '_mailgun_subscriber_lists', false);
+		$this->confirmed = get_post_meta($this->post_id, '_mailgun_subscription_confirmed', true);
 	}
 
 	public function get_id() {
 		return $this->id;
+	}
+
+	public function confirmed() {
+		return $this->confirmed;
+	}
+
+	public function mark_confirmed() {
+		$this->confirmed = TRUE;
+		if ( $this->post_id ) {
+			update_post_meta( $this->post_id, '_mailgun_subscription_confirmed', TRUE );
+		}
+	}
+
+	public function expired() {
+		if ( $this->post_id ) {
+			$created = get_post_time('U', TRUE, $this->post_id);
+			$age = time() - $created;
+			return $age > WEEK_IN_SECONDS; // TODO: option for threshold
+		} else {
+			return FALSE;
+		}
 	}
 } 

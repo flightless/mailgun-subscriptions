@@ -81,7 +81,7 @@ class Submission_Handler {
 	}
 
 	protected function get_confirmation_message_template() {
-		$template = get_option( 'mailgun_confirmation_email_template', Template::CONFIRMATION_EMAIL ); // TODO: default template
+		$template = get_option( 'mailgun_confirmation_email_template', Template::CONFIRMATION_EMAIL );
 		return apply_filters( 'mailgun_confirmation_email_template', $template );
 	}
 
@@ -93,7 +93,8 @@ class Submission_Handler {
 			$url = home_url();
 		}
 		$url = add_query_arg(array(
-			'mailgun-confirm' => $confirmation_id,
+			'mailgun-action' => 'confirm',
+			'ref' => $confirmation_id,
 		), $url);
 		return $url;
 	}
