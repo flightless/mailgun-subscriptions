@@ -159,18 +159,7 @@ class Confirmation_Handler {
 	}
 
 	protected function get_subscription_form() {
-		$form = new Subscription_Form();
-		ob_start();
-		$form->display(array(
-			'description' => '',
-			'lists' => $this->get_visible_list_addresses(),
-		));
-		return ob_get_clean();
-	}
-
-	protected function get_visible_list_addresses() {
-		$lists = Plugin::instance()->get_lists('name');
-		$lists = wp_list_filter( $lists, array( 'hidden' => true ), 'NOT' );
-		return array_keys($lists);
+		$shortcodes = Plugin::instance()->shortcode_handler();
+		return $shortcodes->form_shortcode(array());
 	}
 } 

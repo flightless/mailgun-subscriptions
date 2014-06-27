@@ -8,15 +8,20 @@ class Shortcode_Handler {
 	public function register_shortcodes() {
 		add_shortcode( 'mailgun_email', array( $this, 'email_shortcode' ) );
 		add_shortcode( 'mailgun_lists', array( $this, 'lists_shortcode' ) );
+		add_shortcode( 'mailgun_subscription_form', array( $this, 'form_shortcode' ) );
 	}
 
-	public function email_shortcode( $atts, $content, $tag ) {
+	public function email_shortcode( $atts, $content = '', $tag = '' ) {
 		$atts = shortcode_atts( array(
 			'before' => '',
 			'after' => '',
 			'empty' => '',
 		), $atts );
-		$confirmation = Plugin::instance()->confirmation_handler()->get_confirmation();
+		$handler = Plugin::instance()->confirmation_handler();
+		if ( !$handler ) {
+			return '';
+		}
+		$confirmation = $handler->get_confirmation();
 		$address = $confirmation->get_address();
 		if ( empty($address) ) {
 			$address = $atts['empty'];
@@ -27,7 +32,7 @@ class Shortcode_Handler {
 		return $atts['before'].esc_html($confirmation->get_address()).$atts['after'];
 	}
 
-	public function lists_shortcode( $atts, $content, $tag ) {
+	public function lists_shortcode( $atts, $content = '', $tag = '' ) {
 		$atts = shortcode_atts( array(
 			'before' => '<ul>',
 			'after' => '</ul>',
@@ -35,7 +40,11 @@ class Shortcode_Handler {
 			'after_item' => '</li>',
 			'separator' => '',
 		), $atts );
-		$confirmation = Plugin::instance()->confirmation_handler()->get_confirmation();
+		$handler = Plugin::instance()->confirmation_handler();
+		if ( !$handler ) {
+			return '';
+		}
+		$confirmation = $handler->get_confirmation();
 		$subscribed_lists = $confirmation->get_lists();
 		$all_lists = Plugin::instance()->get_lists('name');
 		$items = array();
@@ -48,5 +57,31 @@ class Shortcode_Handler {
 			return $atts['before'].implode($atts['separator'], $items).$atts['after'];
 		}
 		return '';
+	}
+
+	public function form_shortcode( $atts, $content = '', $tag = '' ) {
+		$atts = shortcode_atts(array(
+			'description' => '',
+			'lists' => '',
+		), $atts);
+		if ( empty($atts['lists']) ) {
+			$lists = $this->get_visible_list_addresses();
+		} else {
+			$lists = preg_split('/( |,)+/', $atts['lists']);
+		}
+
+		$form = new Subscription_Form();
+		ob_start();
+		$form->display(array(
+			'description' => $atts['description'],
+			'lists' => $lists,
+		));
+		return ob_get_clean();
+	}
+
+	protected function get_visible_list_addresses() {
+		$lists = Plugin::instance()->get_lists('name');
+		$lists = wp_list_filter( $lists, array( 'hidden' => true ), 'NOT' );
+		return array_keys($lists);
 	}
 } 

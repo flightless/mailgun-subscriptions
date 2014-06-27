@@ -54,6 +54,7 @@ class Plugin {
 		}
 		add_action( 'init', array( $this, 'setup_confirmations' ) );
 		$this->setup_widget();
+		$this->setup_shortcodes();
 
 		if ( !is_admin() ) {
 			if ( !empty($_POST['mailgun-action']) && $_POST['mailgun-action'] == 'subscribe' ) {
@@ -94,8 +95,6 @@ class Plugin {
 
 	public function setup_confirmation_page() {
 		if ( is_page() && get_queried_object_id() == get_option('mailgun_confirmation_page', 0) ) {
-			$this->shortcode_handler = new Shortcode_Handler();
-			$this->shortcode_handler->register_shortcodes();
 
 			if ( !$this->confirmation_handler ) {
 				$this->setup_confirmation_handler();
@@ -104,6 +103,11 @@ class Plugin {
 
 			add_filter( 'the_post', array( $this->confirmation_handler, 'setup_page_data' ), 10, 1 );
 		}
+	}
+
+	public function setup_shortcodes() {
+		$this->shortcode_handler = new Shortcode_Handler();
+		$this->shortcode_handler->register_shortcodes();
 	}
 
 	public function get_lists( $orderby = 'address' ) {

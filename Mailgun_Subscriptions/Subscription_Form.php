@@ -66,7 +66,7 @@ class Subscription_Form {
 		echo '<ul class="mailgun-widget-lists">';
 		foreach ( $instance['lists'] as $address ) {
 			$list = new Mailing_List($address);
-			if ( $list->is_hidden() ) {
+			if ( !$list->exists() || $list->is_hidden() ) {
 				continue;
 			}
 			echo '<li>';

@@ -7,7 +7,7 @@ namespace Mailgun_Subscriptions;
 class Mailing_List {
 	private $address = '';
 	public function __construct( $address ) {
-		$this->address = $address;
+		$this->address = trim($address);
 	}
 
 	public function exists() {
