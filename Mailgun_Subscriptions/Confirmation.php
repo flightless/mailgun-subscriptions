@@ -104,7 +104,10 @@ class Confirmation {
 		if ( $this->post_id ) {
 			$created = get_post_time('U', TRUE, $this->post_id);
 			$age = time() - $created;
-			return $age > WEEK_IN_SECONDS; // TODO: option for threshold
+
+			$days = get_option( 'mailgun_confirmation_expiration', 7 );
+			$threshold = $days * 24 * 60 * 60;
+			return $age > $threshold;
 		} else {
 			return FALSE;
 		}

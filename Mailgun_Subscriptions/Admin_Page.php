@@ -96,6 +96,25 @@ class Admin_Page {
 		);
 
 		add_settings_field(
+			'mailgun_confirmation_expiration',
+			__('Expiration Period', 'mailgun-subscriptions'),
+			array( $this, 'display_text_field' ),
+			self::MENU_SLUG,
+			'confirmation',
+			array(
+				'option' => 'mailgun_confirmation_expiration',
+				'description' => __('Subscription requests will become invalid after this many days', 'mailgun-subscriptions'),
+				'default' => 7,
+			)
+		);
+
+		register_setting(
+			self::MENU_SLUG,
+			'mailgun_confirmation_expiration',
+			'intval'
+		);
+
+		add_settings_field(
 			'mailgun_confirmation_email_template',
 			__('Confirmation Email', 'mailgun-subscriptions'),
 			array( $this, 'display_textarea_field' ),
@@ -140,15 +159,6 @@ class Admin_Page {
 			'mailgun_new_list',
 			array( $this, 'save_new_list' )
 		);
-
-		if ( WP_DEBUG ) {
-			add_settings_section(
-				'debug',
-				'Debugging',
-				array( $this, 'admin_debug' ),
-				self::MENU_SLUG
-			);
-		}
 	}
 
 	public function display() {

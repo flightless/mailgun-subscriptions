@@ -53,6 +53,7 @@ class Plugin {
 			$this->setup_admin_page();
 		}
 		add_action( 'init', array( $this, 'setup_confirmations' ) );
+		Cleanup::init();
 		$this->setup_frontend_ui();
 
 		if ( !is_admin() ) {
