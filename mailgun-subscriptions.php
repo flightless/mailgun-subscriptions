@@ -6,17 +6,29 @@ Description: A widget for visitors to subscribe to Mailgun mailing lists
 Author: Flightless
 Author URI: http://flightless.us/
 Version: 1.0
+Text Domain: mailgun-subscriptions
+Domain Path: /languages
 */
 
 if ( !function_exists('mailgun_subscriptions_load') ) {
 
 	function mailgun_subscriptions_load() {
+		add_action( 'init', 'mailgun_load_textdomain', 10, 0 );
 		if ( mailgun_subscriptions_version_check() ) {
 			require_once('Mailgun_Subscriptions/Plugin.php');
 			\Mailgun_Subscriptions\Plugin::init(__FILE__);
 		} else {
 			add_action( 'admin_notices', 'mailgun_subscriptions_version_notice' );
 		}
+	}
+
+	function mailgun_load_textdomain() {
+		$domain = 'mailgun-subscriptions';
+		// The "plugin_locale" filter is also used in load_plugin_textdomain()
+		$locale = apply_filters('plugin_locale', get_locale(), $domain);
+
+		load_textdomain($domain, WP_LANG_DIR.'/mailgun-subscriptions/'.$domain.'-'.$locale.'.mo');
+		load_plugin_textdomain($domain, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 	}
 
 	function mailgun_subscriptions_version_check() {
