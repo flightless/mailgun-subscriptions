@@ -52,7 +52,7 @@ class Submission_Handler {
 	}
 
 	protected function get_submitted_lists() {
-		$lists = $this->submission['mailgun-lists'];
+		$lists = isset($this->submission['mailgun-lists']) ? $this->submission['mailgun-lists'] : array();
 		if ( empty($lists) ) {
 			return array();
 		}
