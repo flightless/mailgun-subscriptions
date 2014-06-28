@@ -125,7 +125,7 @@ class Confirmation_Handler {
 		$messages = array();
 		if ( !isset($_GET['mailgun-message']) ) { // otherwise we got here from the subscription form
 			foreach ( $this->errors as $error_code ) {
-				$messages[] = '<p class="error">'.$this->get_message($error_code).'</p>';
+				$messages[] = '<p class="mailgun-message error">'.$this->get_message($error_code).'</p>';
 			}
 		}
 		$page_content = implode($messages).$this->get_subscription_form();

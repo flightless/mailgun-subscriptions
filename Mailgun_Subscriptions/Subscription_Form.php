@@ -11,6 +11,8 @@ class Subscription_Form {
 			'lists' => array(),
 		));
 
+		do_action( 'mailgun_enqueue_assets' );
+
 		if ( !empty($_GET['mailgun-message']) ) {
 			do_action( 'mailgun_form_message', $_GET['mailgun-message'], !empty($_GET['mailgun-error']), $this );
 		}
@@ -88,7 +90,10 @@ class Subscription_Form {
 		static $instance_counter = 0;
 		$instance_counter++;
 
-		echo apply_filters( 'mailgun_subscription_form_description', $instance['description'] );
+		$description = apply_filters( 'mailgun_subscription_form_description', $instance['description'] );
+		if ( $description ) {
+			echo '<div class="mailgun-form-description">'.$description.'</div>';
+		}
 
 		printf('<form class="mailgun-subscription-form" method="post" action="%s">', $this->get_form_action());
 		echo '<input type="hidden" name="mailgun-action" value="subscribe" />';

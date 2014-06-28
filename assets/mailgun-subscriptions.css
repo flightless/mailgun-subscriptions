@@ -1,0 +1,24 @@
+.mailgun-subscription-form .mailgun-subscription-form-lists li {
+	margin-bottom: 0.5em;
+}
+
+.mailgun-subscription-form .mailgun-list-description {
+	font-style: italic;
+}
+
+.mailgun-subscription-form .email-address label {
+	display: block;
+	margin-bottom: 0.25em;
+}
+
+.mailgun-form-description {
+	margin-bottom: 1em;
+}
+
+.mailgun-message {
+	font-style: italic;
+}
+
+.mailgun-message.error {
+	color: #CC0000;
+}

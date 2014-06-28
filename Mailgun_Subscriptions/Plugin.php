@@ -5,6 +5,8 @@ namespace Mailgun_Subscriptions;
 
 
 class Plugin {
+	const VERSION = '1.0';
+
 	/** @var Plugin */
 	private static $instance = NULL;
 
@@ -73,6 +75,15 @@ class Plugin {
 		add_action( 'mailgun_form_content', array( __NAMESPACE__.'\\Subscription_Form', 'form_contents_callback' ), 10, 2 );
 		$this->setup_widget();
 		$this->setup_shortcodes();
+		add_action( 'mailgun_enqueue_assets', array( $this, 'enqueue_assets' ), 10, 0 );
+	}
+
+	public function enqueue_assets() {
+		$css_path = plugins_url( 'assets/mailgun-subscriptions.css', dirname(__FILE__) );
+		$css_path = apply_filters( 'mailgun_css_path', $css_path );
+		if ( $css_path ) {
+			wp_enqueue_style( 'mailgun-subscriptions', $css_path, array(), self::VERSION );
+		}
 	}
 
 	private function setup_admin_page() {
