@@ -122,7 +122,7 @@ class Admin_Page {
 			'confirmation',
 			array(
 				'option' => 'mailgun_confirmation_email_template',
-				'description' => __('This email will contain a link for users to confirm their subscriptions.', 'mailgun-subscriptions' ),
+				'description' => $this->get_confirmation_email_field_description(),
 				'default' => Template::confirmation_email(),
 			)
 		);
@@ -139,7 +139,7 @@ class Admin_Page {
 			'confirmation',
 			array(
 				'option' => 'mailgun_welcome_email_template',
-				'description' => __('This email will be sent to users after they confirm their subscription.', 'mailgun-subscriptions' ),
+				'description' => $this->get_welcome_email_field_description(),
 				'default' => Template::welcome_email(),
 			)
 		);
@@ -347,18 +347,19 @@ class Admin_Page {
 		return wp_insert_post( $new_post );
 	}
 
-	public function admin_debug() {
-		/*$api = Plugin::instance()->api();;
-		$response = $api->post('lists', array(
-			'address' => 'test@sandbox12a9ae7f0a814564b6ced1e47eac3f6a.mailgun.org',
-			'name' => 'API Test 01',
-			'description' => 'Testing API with invalid domain',
-		));
-		printf(
-			"<div class='debug'><h1>%s</h1><pre>%s</pre></div>",
-			'$response',
-			htmlspecialchars( print_r($response , TRUE ) )
-		); /* */
+	public function get_confirmation_email_field_description() {
+		$description = __("This email will contain a link for users to confirm their subscriptions. Your template should contain the following shortcodes:<br />
+			<code>[link]</code> &ndash; This becomes a link back to your site with a unique code to confirm the user's subscription request.<br />
+			<code>[email]</code> &ndash; This is the user's email address.<br />
+			<code>[lists]</code> &ndash; This is a list of the lists the user opted to subscribe to.", 'mailgun-subscriptions' );
+		return $description;
+	}
+
+	public function get_welcome_email_field_description() {
+		$description = __("This email will be sent to users after they confirm their subscription. Leave blank to disable this email. Your template can contain the following shortcodes:<br />
+			<code>[email]</code> &ndash; This is the user's email address.<br />
+			<code>[lists]</code> &ndash; This is a list of the lists the user opted to subscribe to.", 'mailgun-subscriptions' );
+		return $description;
 	}
 }
  

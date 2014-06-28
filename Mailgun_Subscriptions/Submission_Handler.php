@@ -81,7 +81,10 @@ class Submission_Handler {
 	}
 
 	protected function get_confirmation_message_template() {
-		$template = get_option( 'mailgun_confirmation_email_template', Template::confirmation_email() );
+		$template = get_option( 'mailgun_confirmation_email_template', '' );
+		if ( empty($template) ) {
+			$template = Template::confirmation_email();
+		}
 		return apply_filters( 'mailgun_confirmation_email_template', $template );
 	}
 

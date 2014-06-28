@@ -84,7 +84,10 @@ class Confirmation_Handler {
 
 	protected function send_welcome_email() {
 		$address = $this->confirmation->get_address();
-		wp_mail( $address, $this->get_welcome_email_subject(), $this->get_welcome_email_message() );
+		$message = $this->get_welcome_email_message();
+		if ( !empty($message) ) {
+			wp_mail( $address, $this->get_welcome_email_subject(), $message );
+		}
 	}
 
 	protected function get_welcome_email_subject() {
