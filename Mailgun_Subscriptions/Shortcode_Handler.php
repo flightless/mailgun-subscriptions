@@ -67,7 +67,7 @@ class Shortcode_Handler {
 		if ( empty($atts['lists']) ) {
 			$lists = $this->get_visible_list_addresses();
 		} else {
-			$lists = preg_split('/( |,)+/', $atts['lists']);
+			$lists = array_filter(preg_split('/( |,)+/', $atts['lists']));
 		}
 
 		$form = new Subscription_Form();

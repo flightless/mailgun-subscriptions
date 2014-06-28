@@ -53,8 +53,7 @@ class Plugin {
 			$this->setup_admin_page();
 		}
 		add_action( 'init', array( $this, 'setup_confirmations' ) );
-		$this->setup_widget();
-		$this->setup_shortcodes();
+		$this->setup_frontend_ui();
 
 		if ( !is_admin() ) {
 			if ( !empty($_POST['mailgun-action']) && $_POST['mailgun-action'] == 'subscribe' ) {
@@ -66,6 +65,13 @@ class Plugin {
 
 			add_action( 'wp', array( $this, 'setup_confirmation_page' ), 10, 0 );
 		}
+	}
+
+	private function setup_frontend_ui() {
+		add_action( 'mailgun_form_message', array( __NAMESPACE__.'\\Subscription_Form', 'form_message_callback' ), 10, 3 );
+		add_action( 'mailgun_form_content', array( __NAMESPACE__.'\\Subscription_Form', 'form_contents_callback' ), 10, 2 );
+		$this->setup_widget();
+		$this->setup_shortcodes();
 	}
 
 	private function setup_admin_page() {
