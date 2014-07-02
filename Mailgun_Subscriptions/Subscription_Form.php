@@ -63,6 +63,12 @@ class Subscription_Form {
 			case 'invalid-email':
 				$message = __('Please verify your email address.', 'mailgun-subscriptions');
 				break;
+			case 'unsubscribed':
+				$message = __('You have previously unsubscribed. Please contact us to reactivate your account.', 'mailgun-subscriptions');
+				break;
+			case 'already-subscribed':
+				$message = __('You are already subscribed. Please contact us if you have trouble receiving messages.', 'mailgun-subscriptions');
+				break;
 			default:
 				$message = $code;
 				break;

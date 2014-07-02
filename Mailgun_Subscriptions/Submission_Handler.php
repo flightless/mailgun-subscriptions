@@ -30,12 +30,38 @@ class Submission_Handler {
 			$this->errors[] = 'no-email';
 		} elseif ( !$this->is_valid_email($this->get_submitted_address()) ) {
 			$this->errors[] = 'invalid-email';
+		} elseif ( $this->is_unsubscribed( $this->get_submitted_address(), $this->get_submitted_lists() ) ) {
+			$this->errors[] = 'unsubscribed';
+		} elseif ( $this->is_already_subscribed( $this->get_submitted_address(), $this->get_submitted_lists() ) ) {
+			$this->errors[] = 'already-subscribed';
 		}
 		return empty($this->errors);
 	}
 
 	protected function is_valid_email( $address ) {
 		return Plugin::instance()->api( TRUE )->validate_email( $address );
+	}
+
+	protected function is_already_subscribed( $address, $lists ) {
+		$api = Plugin::instance()->api();
+		foreach ( $lists as $l ) {
+			$member = $api->get( 'lists/'.$l.'/members/'.$address );
+			if ( $member['response']['code'] == 200 ) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+	protected function is_unsubscribed( $address, $lists ) {
+		$api = Plugin::instance()->api();
+		foreach ( $lists as $l ) {
+			$response = $api->get( 'lists/'.$l.'/members/'.$address );
+			if ( $response['response']['code'] == 200 && $response['body']->member->subscribed === false ) {
+				return TRUE;
+			}
+		}
+		return FALSE;
 	}
 
 	protected function save_subscription_request() {
