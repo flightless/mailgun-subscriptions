@@ -7,6 +7,8 @@ namespace Mailgun_Subscriptions;
 class Submission_Handler {
 	protected $submission = array();
 	protected $errors = array();
+	protected $error_details = array();
+	protected $transient_key = '';
 
 	public function __construct( $submission ) {
 		$this->submission = $submission;
@@ -18,8 +20,26 @@ class Submission_Handler {
 			$this->send_confirmation_email( $confirmation_id );
 			$this->do_success_redirect();
 		} else {
+			$this->store_errors();
 			$this->do_error_redirect();
 		}
+	}
+
+	public static function get_error_data( $key, $code ) {
+		$data = get_transient( 'mg_'.$key );
+		if ( empty($data[$code]) ) {
+			return array();
+		}
+		return $data[$code];
+	}
+
+	protected function store_errors() {
+		if ( empty($this->error_details) ) {
+			$this->transient_key = 1;
+			return;
+		}
+		$this->transient_key = md5(serialize($this->error_details));
+		set_transient( 'mg_'.$this->transient_key, $this->error_details, MINUTE_IN_SECONDS * 3 );
 	}
 
 	protected function is_valid_submission() {
@@ -39,7 +59,11 @@ class Submission_Handler {
 	}
 
 	protected function is_valid_email( $address ) {
-		return Plugin::instance()->api( TRUE )->validate_email( $address );
+		$valid = Plugin::instance()->api( TRUE )->validate_email( $address );
+		if ( !$valid ) {
+			$this->error_details['invalid-email'][] = $address;
+		}
+		return $valid;
 	}
 
 	protected function is_already_subscribed( $address, $lists ) {
@@ -47,10 +71,10 @@ class Submission_Handler {
 		foreach ( $lists as $l ) {
 			$member = $api->get( 'lists/'.$l.'/members/'.$address );
 			if ( $member['response']['code'] == 200 ) {
-				return TRUE;
+				$this->error_details['already-subscribed'][] = $l;
 			}
 		}
-		return FALSE;
+		return !empty($this->error_details['already-subscribed']);
 	}
 
 	protected function is_unsubscribed( $address, $lists ) {
@@ -58,10 +82,10 @@ class Submission_Handler {
 		foreach ( $lists as $l ) {
 			$response = $api->get( 'lists/'.$l.'/members/'.$address );
 			if ( $response['response']['code'] == 200 && $response['body']->member->subscribed === false ) {
-				return TRUE;
+				$this->error_details['unsubscribed'][] = $l;
 			}
 		}
-		return FALSE;
+		return !empty($this->error_details['unsubscribed']);
 	}
 
 	protected function save_subscription_request() {
@@ -153,7 +177,7 @@ class Submission_Handler {
 		$url = $this->get_redirect_base_url();
 		$url = add_query_arg( array(
 			'mailgun-message' => $this->errors,
-			'mailgun-error' => 1,
+			'mailgun-error' => $this->transient_key,
 		), $url );
 		wp_safe_redirect($url);
 		exit();
