@@ -45,7 +45,7 @@ class Subscription_Form {
 		}
 		$error_class = $error ? ' error' : '';
 		foreach ( $message as $code ) {
-			echo '<p class="mailgun-message'.$error_class.'">', esc_html($this->get_message_string($code)), '</p>';
+			echo '<p class="mailgun-message'.$error_class.'">', $this->get_message_string($code), '</p>';
 		}
 	}
 
