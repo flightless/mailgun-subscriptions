@@ -39,8 +39,8 @@ if ( !function_exists('mailgun_subscriptions_load') ) {
 	}
 
 	function mailgun_subscriptions_version_notice() {
-		$message = sprintf(__('MailGun Mailing List Subscriptions requires PHP version %s or higher. You are using version %s.'), '5.3.2', PHP_VERSION);
-		// TODO: display it
+		$message = sprintf(__('MailGun Mailing List Subscriptions requires PHP version %s or higher. You are using version %s.', 'mailgun-subscriptions'), '5.3.2', PHP_VERSION);
+		printf( '<div class="error"><p>%s</p></div>', $message );
 	}
 
 	add_action( 'plugins_loaded', 'mailgun_subscriptions_load' );
