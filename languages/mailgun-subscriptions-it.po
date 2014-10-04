@@ -1,0 +1,285 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Mailgun Mailing List Subscriptions\n"
+"POT-Creation-Date: 2014-10-03 14:07+0100\n"
+"PO-Revision-Date: 2014-10-03 14:27+0100\n"
+"Last-Translator: Pierre Prinetti\n"
+"Language-Team: Pierre Prinetti\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Mailgun_Subscriptions/Admin_Page.php:21
+#: Mailgun_Subscriptions/Admin_Page.php:165
+msgid "Mailgun Mailing Lists"
+msgstr "Liste di distribuzione Mailgun"
+
+#: Mailgun_Subscriptions/Admin_Page.php:22
+msgid "Mailgun Lists"
+msgstr "Liste Mailgun"
+
+#: Mailgun_Subscriptions/Admin_Page.php:29
+msgid "API Credentials"
+msgstr "Credenziali dell'API"
+
+#: Mailgun_Subscriptions/Admin_Page.php:35
+msgid "API Key"
+msgstr "API Key"
+
+#: Mailgun_Subscriptions/Admin_Page.php:50
+msgid "API Public Key"
+msgstr "API Public Key"
+
+#: Mailgun_Subscriptions/Admin_Page.php:69
+msgid "Available Lists"
+msgstr "Liste disponibili"
+
+#: Mailgun_Subscriptions/Admin_Page.php:76
+msgid "Subscription Confirmation"
+msgstr "Conferma della sottoscrizione"
+
+#: Mailgun_Subscriptions/Admin_Page.php:83
+msgid "Confirmation Page"
+msgstr "Pagina di conferma"
+
+#: Mailgun_Subscriptions/Admin_Page.php:100
+msgid "Expiration Period"
+msgstr "Scadenza"
+
+#: Mailgun_Subscriptions/Admin_Page.php:106
+msgid "Subscription requests will become invalid after this many days"
+msgstr "Le conferme di sottoscrizione scadono dopo questo numero di giorni"
+
+#: Mailgun_Subscriptions/Admin_Page.php:119
+msgid "Confirmation Email"
+msgstr "E-mail di conferma"
+
+#: Mailgun_Subscriptions/Admin_Page.php:136
+msgid "Welcome Email"
+msgstr "E-mail di benvenuto"
+
+#: Mailgun_Subscriptions/Admin_Page.php:167
+msgid "Save Settings"
+msgstr "Salva impostazioni"
+
+#: Mailgun_Subscriptions/Admin_Page.php:212
+msgid "Address"
+msgstr "Indirizzo"
+
+#: Mailgun_Subscriptions/Admin_Page.php:213
+msgid "Name"
+msgstr "Nome"
+
+#: Mailgun_Subscriptions/Admin_Page.php:214
+msgid "Description"
+msgstr "Descrizione"
+
+#: Mailgun_Subscriptions/Admin_Page.php:215
+msgid "Hidden"
+msgstr "Nascondi"
+
+#: Mailgun_Subscriptions/Admin_Page.php:232
+msgid "Create a new list"
+msgstr "Creare una nuova lista"
+
+#: Mailgun_Subscriptions/Admin_Page.php:326
+msgid "-- New Page --"
+msgstr "-- Nuova pagina --"
+
+#: Mailgun_Subscriptions/Admin_Page.php:339
+msgid "Subscription Confirmed"
+msgstr "Sottoscrizione confermata"
+
+#: Mailgun_Subscriptions/Admin_Page.php:351
+msgid ""
+"This email will contain a link for users to confirm their subscriptions. "
+"Your template should contain the following shortcodes:<br />\n"
+"\t\t\t<code>[link]</code> &ndash; This becomes a link back to your site with "
+"a unique code to confirm the user's subscription request.<br />\n"
+"\t\t\t<code>[email]</code> &ndash; This is the user's email address.<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; This is a list of the lists the user "
+"opted to subscribe to."
+msgstr ""
+"Questa e-mail conterrà un link per la conferma della sottoscrizione. Il "
+"template dovrebbe contenere i seguenti codici:<br />\n"
+"\t\t\t<code>[link]</code> &ndash; Questo codice verrà sostituito con un "
+"collegamento al sito web che conterrà il codice necessario alla conferma "
+"della sottoscrizione.<br />\n"
+"\t\t\t<code>[email]</code> &ndash; Questo è l'indirizzo e-mail dell'utente."
+"<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; Questo è l'elenco delle liste di "
+"distribuzione alle quali l'utente ha scelto di iscriversi."
+
+#: Mailgun_Subscriptions/Admin_Page.php:359
+msgid ""
+"This email will be sent to users after they confirm their subscription. "
+"Leave blank to disable this email. Your template can contain the following "
+"shortcodes:<br />\n"
+"\t\t\t<code>[email]</code> &ndash; This is the user's email address.<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; This is a list of the lists the user "
+"opted to subscribe to."
+msgstr ""
+"Questa e-mail verrà trasmessa agli utenti dopo la conferma della loro "
+"sottoscrizione. Lasciare in bianco per disabilitare questa e-mail. Il "
+"template può contenere questi codici:<br />\n"
+"\t\t\t<code>[email]</code> &ndash; Questo è l'indirizzo e-mail dell'utente."
+"<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; Questo è l'elenco delle liste di "
+"distribuzione alle quali l'utente ha scelto di iscriversi."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:94
+#, php-format
+msgid "[%s] Your Subscription Is Confirmed"
+msgstr "[%s] La sottoscrizione è stata confermata"
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:137
+msgid "Error Confirming Your Subscription"
+msgstr "Errore nella conferma della sottoscrizione"
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:143
+msgid "Your request could not be found. Please try again."
+msgstr "La richiesta non è stata trovata. Prego riprovare."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:146
+msgid ""
+"There are no mailing lists associated with your request. Please try again."
+msgstr "Non ci sono mailing list associate alla richiesta. Prego riprovare."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:149
+msgid "You have already confirmed your request."
+msgstr "La richiesta è già stata confermata."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:152
+msgid "Your request has expired. Please try again."
+msgstr "La richiesta è scaduta. Prego riprovare."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:155
+msgid ""
+"We experienced a problem setting up your subscription. Please try again."
+msgstr "Errore nella registrazione. Prego riprovare."
+
+#: Mailgun_Subscriptions/Post_Type_Registrar.php:18
+msgid "Mailgun Confirmation"
+msgstr "Conferma Mailgun"
+
+#: Mailgun_Subscriptions/Shortcode_Handler.php:53
+#, php-format
+msgid "%1$s (%2$s)"
+msgstr "%1$s (%2$s)"
+
+#: Mailgun_Subscriptions/Submission_Handler.php:121
+#, php-format
+msgid "[%s] Confirm Your Subscription"
+msgstr "[%s] Confermare la propria sottoscrizione"
+
+#: Mailgun_Subscriptions/Subscription_Form.php:55
+msgid "Please check your email for a link to confirm your subscription."
+msgstr "E' stato spedita una e-mail di conferma all'indirizzo fornito."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:58
+msgid "Please select a mailing list."
+msgstr "Scegliere una mailing list."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:61
+msgid "Please enter your email address."
+msgstr "Inserire l'indirizzo e-mail."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:64
+msgid "Please verify your email address."
+msgstr "Prego verificare l'indirizzo e-mail."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:67
+msgid ""
+"You have previously unsubscribed. Please contact us to reactivate your "
+"account."
+msgstr ""
+"L'indirizzo risulta essere disiscritto. Per favore, contattaci per "
+"riattivare il tuo account."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:70
+msgid ""
+"You are already subscribed. Please contact us if you have trouble receiving "
+"messages."
+msgstr ""
+"L'indirizzo risulta già iscritto. Contatta il gestore del sito per "
+"assistenza se non ricevi correttamente i messaggi."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:120
+msgid "Email Address"
+msgstr "Indirizzo e-mail"
+
+#: Mailgun_Subscriptions/Subscription_Form.php:128
+#: Mailgun_Subscriptions/Widget.php:54
+msgid "Subscribe"
+msgstr "Registra"
+
+#: Mailgun_Subscriptions/Template.php:9
+msgid ""
+"Thank you for subscribing. Please visit [link] to confirm your subscription "
+"for [email] to the following lists:\n"
+"\n"
+"[lists]"
+msgstr ""
+"Grazie per la registrazione. Clicca qui ([link]) per confermare l'indirizzo "
+"[email] per le seguenti liste:\n"
+"\n"
+"[lists]"
+
+#: Mailgun_Subscriptions/Template.php:13
+msgid ""
+"Your email address, [email], has been confirmed. You are now subscribed to "
+"the following lists:\n"
+"\n"
+"[lists]"
+msgstr ""
+"L'indirizzo e-mail [email] è stato confermato. Sei ora iscritto alle "
+"seguenti liste:\n"
+"\n"
+"[lists]"
+
+#: Mailgun_Subscriptions/Template.php:17
+msgid ""
+"<p>Thank you for confirming your subscription. <strong>[mailgun_email]</"
+"strong> is now subscribed to:</p>[mailgun_lists]"
+msgstr ""
+"<p>Grazie per aver confermato la registrazione. L'indirizzo "
+"<strong>[mailgun_email]</strong> è ora registrato alle seguenti liste:</"
+"p>[mailgun_lists]"
+
+#: Mailgun_Subscriptions/Widget.php:10
+msgid "A mailgun list subscription form"
+msgstr "Un form per la registrazione alla mailing list Mailgun"
+
+#: Mailgun_Subscriptions/Widget.php:12
+msgid "Mailgun List Subscription Form"
+msgstr "Form per la registrazione alla mailing list"
+
+#: Mailgun_Subscriptions/Widget.php:70
+msgid "Title:"
+msgstr "Titolo:"
+
+#: Mailgun_Subscriptions/Widget.php:73
+msgid "Description:"
+msgstr "Descrizione:"
+
+#: Mailgun_Subscriptions/Widget.php:76
+msgid "Options:"
+msgstr "Opzioni:"
+
+#: mailgun-subscriptions.php:42
+#, php-format
+msgid ""
+"MailGun Mailing List Subscriptions requires PHP version %s or higher. You "
+"are using version %s."
+msgstr ""
+"MailGun Mailing List Subscriptions richiede PHP versione %s o superiore. Ora "
+"stai usando %s."
