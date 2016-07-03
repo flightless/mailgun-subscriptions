@@ -70,7 +70,7 @@ class Subscription_Form {
 				$message = __('You are already subscribed. Please contact us if you have trouble receiving messages.', 'mailgun-subscriptions');
 				break;
 			default:
-				$message = $code;
+				$message = '';
 				break;
 		}
 		$message = apply_filters( 'mailgun_message', $message, $code, 'widget' );

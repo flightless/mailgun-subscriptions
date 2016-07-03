@@ -24,6 +24,15 @@ class Plugin {
 	/** @var Shortcode_Handler */
 	private $shortcode_handler = NULL;
 
+	/** @var Account_Management_Page */
+	private $account_management_page = NULL;
+
+	/** @var Account_Management_Token_Request_Handler */
+	private $token_request_handler = NULL;
+
+	/** @var Account_Management_Subscription_Request_Handler */
+	private $account_manangement_subscription_handler = NULL;
+
 	public function api( $public = FALSE ) {
 		if ( $public ) {
 			return new API(get_option('mailgun_api_public_key'));
@@ -48,6 +57,14 @@ class Plugin {
 		return $this->shortcode_handler;
 	}
 
+	public function account_management_page() {
+		return $this->account_management_page;
+	}
+
+	public function token_request_handler() {
+		return $this->token_request_handler;
+	}
+
 	private function setup( $plugin_file ) {
 		self::$plugin_file = $plugin_file;
 		spl_autoload_register( array( __CLASS__, 'autoload' ) );
@@ -59,13 +76,24 @@ class Plugin {
 		$this->setup_frontend_ui();
 
 		if ( !is_admin() ) {
-			if ( !empty($_POST['mailgun-action']) && $_POST['mailgun-action'] == 'subscribe' ) {
-				$this->setup_submission_handler();
+			if ( !empty( $_REQUEST[ 'mailgun-action' ] ) ) {
+				switch( $_REQUEST[ 'mailgun-action' ] ) {
+					case 'subscribe':
+						$this->setup_submission_handler();
+						break;
+					case 'confirm':
+						$this->setup_confirmation_handler();
+						break;
+					case 'request-token':
+						$this->setup_token_request_handler();
+						break;
+					case 'account-subscribe':
+					case 'account-resubscribe':
+					case 'account-unsubscribe':
+						$this->setup_account_management_handler();
+						break;
+				}
 			}
-			if ( !empty($_GET['mailgun-action']) && $_GET['mailgun-action'] == 'confirm' ) {
-				$this->setup_confirmation_handler();
-			}
-
 			add_action( 'wp', array( $this, 'setup_confirmation_page' ), 10, 0 );
 		}
 	}
@@ -75,6 +103,7 @@ class Plugin {
 		add_action( 'mailgun_form_content', array( __NAMESPACE__.'\\Subscription_Form', 'form_contents_callback' ), 10, 2 );
 		$this->setup_widget();
 		$this->setup_shortcodes();
+		$this->setup_account_management_page();
 		add_action( 'mailgun_enqueue_assets', array( $this, 'enqueue_assets' ), 10, 0 );
 	}
 
@@ -126,6 +155,21 @@ class Plugin {
 	public function setup_shortcodes() {
 		$this->shortcode_handler = new Shortcode_Handler();
 		$this->shortcode_handler->register_shortcodes();
+	}
+
+	public function setup_account_management_page() {
+		$this->account_management_page = new Account_Management_Page( new Account_Management_Page_Authenticator( $_COOKIE ) );
+		add_action( 'init', array( $this->account_management_page, 'init' ) );
+	}
+
+	public function setup_token_request_handler() {
+		$this->token_request_handler = new Account_Management_Token_Request_Handler( $_POST );
+		add_action( 'parse_request', array( $this->token_request_handler, 'handle_request' ), 10, 0 );
+	}
+
+	public function setup_account_management_handler() {
+		$this->account_manangement_subscription_handler = new Account_Management_Subscription_Request_Handler( $_GET, new Account_Management_Page_Authenticator( $_COOKIE ) );
+		add_action( 'parse_request', array( $this->account_manangement_subscription_handler, 'handle_request' ), 10, 0 );
 	}
 
 	public function get_lists( $orderby = 'address' ) {

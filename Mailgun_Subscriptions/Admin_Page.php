@@ -7,6 +7,7 @@ namespace Mailgun_Subscriptions;
  */
 class Admin_Page {
 	const MENU_SLUG = 'mailgun_subscriptions';
+	const OPTION_ACCOUNT_PAGE = 'mailgun_account_management_page';
 
 	public function refresh_caches() {
 		$lists = $this->get_mailing_lists_from_api();
@@ -159,6 +160,26 @@ class Admin_Page {
 			'mailgun_new_list',
 			array( $this, 'save_new_list' )
 		);
+
+		add_settings_section(
+			'account_management',
+			__('Account Management', 'mailgun-subscriptions'),
+			'__return_false',
+			self::MENU_SLUG
+		);
+
+		add_settings_field(
+			self::OPTION_ACCOUNT_PAGE,
+			__('Account Management Page', 'mailgun-subscriptions'),
+			array( $this, 'display_page_select_field' ),
+			self::MENU_SLUG,
+			'account_management',
+			array(
+				'option' => self::OPTION_ACCOUNT_PAGE,
+				'description' => $this->get_account_management_page_description(),
+				'default' => 0,
+			)
+		);
 	}
 
 	public function display() {
@@ -198,6 +219,22 @@ class Admin_Page {
 		$args = wp_parse_args( $args, array('default' => '', 'description' => '', 'rows' => 5, 'cols' => 40) );
 		$value = get_option( $args['option'], $args['default'] );
 		printf( '<textarea rows="%s" cols="%s" name="%s" class="widefat">%s</textarea>', intval($args['rows']), intval($args['cols']), esc_attr($args['option']), esc_textarea($value) );
+		if ( !empty($args['description']) ) {
+			printf( '<p class="description">%s</p>', $args['description'] );
+		}
+	}
+
+	public function display_page_select_field( $args ) {
+		if ( !isset($args['option']) ) {
+			return;
+		}
+		$args = wp_parse_args( $args, array('default' => 0, 'description' => '' ) );
+		$value = get_option( $args['option'], $args['default'] );
+		wp_dropdown_pages( array(
+			'selected' => $value,
+			'name' => $args[ 'option' ],
+			'show_option_none' => false,
+		));
 		if ( !empty($args['description']) ) {
 			printf( '<p class="description">%s</p>', $args['description'] );
 		}
@@ -360,6 +397,10 @@ class Admin_Page {
 			<code>[email]</code> &ndash; This is the user's email address.<br />
 			<code>[lists]</code> &ndash; This is a list of the lists the user opted to subscribe to.", 'mailgun-subscriptions' );
 		return $description;
+	}
+
+	public function get_account_management_page_description() {
+		return __( 'Select which Page of your site will be used to display the Account Management page', 'mailgun-subscriptions' );
 	}
 }
  

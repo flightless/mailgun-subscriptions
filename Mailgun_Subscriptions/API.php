@@ -7,7 +7,7 @@ namespace Mailgun_Subscriptions;
 class API {
 	private $key = '';
 	private $url = '';
-	public function __construct( $apiKey, $apiEndpoint = "api.mailgun.net", $apiVersion = "v2", $ssl = true ) {
+	public function __construct( $apiKey, $apiEndpoint = "api.mailgun.net", $apiVersion = "v3", $ssl = true ) {
 		$this->key = $apiKey;
 		$this->url = $this->build_base_url( $apiEndpoint, $apiVersion, $ssl );
 	}
@@ -35,6 +35,40 @@ class API {
 			array(
 				'body' => $args,
 				'headers' => $this->get_request_headers(),
+			)
+		);
+		if ( is_wp_error($response) ) {
+			return FALSE;
+		}
+		$response['body'] = json_decode($response['body']);
+		return $response;
+	}
+
+	public function put( $endpoint, $args = array() ) {
+		$url = $this->url . $endpoint;
+		$response = wp_remote_request(
+			$url,
+			array(
+				'body' => $args,
+				'headers' => $this->get_request_headers(),
+				'method' => 'PUT',
+			)
+		);
+		if ( is_wp_error($response) ) {
+			return FALSE;
+		}
+		$response['body'] = json_decode($response['body']);
+		return $response;
+	}
+
+	public function delete( $endpoint, $args = array() ) {
+		$url = $this->url . $endpoint;
+		$response = wp_remote_request(
+			$url,
+			array(
+				'body' => $args,
+				'headers' => $this->get_request_headers(),
+				'method' => 'DELETE',
 			)
 		);
 		if ( is_wp_error($response) ) {

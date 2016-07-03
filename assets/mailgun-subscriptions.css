@@ -22,3 +22,31 @@
 .mailgun-message.error {
 	color: #CC0000;
 }
+
+.mailgun-subscription-account-management .mailgun-subscription-details {
+	margin: 0 0 1em;
+}
+.mailgun-subscription-account-management .mailgun-subscription-details h3 {
+	margin: 0 0 0.25em;
+}
+.mailgun-subscription-account-management .mailgun-subscription-details p {
+	margin: 0;
+	padding-left: 1.5em;
+}
+.mailgun-subscription-account-management .mailgun-subscription-details p.current-status {
+	padding-left: 0;
+}
+.mailgun-subscription-account-management .mailgun-subscription-details p.current-status::before {
+	display: inline-block;
+	width: 1em;
+	font-size: 1.5em;
+	line-height: 1;
+}
+.mailgun-subscription-account-management .mailgun-subscription-details p.subscribe.current-status::before {
+	content: '\2611'; /* box with check */
+	color: #23b225;
+}
+.mailgun-subscription-account-management .mailgun-subscription-details p.unsubscribe.current-status::before {
+	content: '\2612'; /* box with x */
+	color: #d42626;
+}

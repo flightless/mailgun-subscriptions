@@ -9,6 +9,7 @@ class Shortcode_Handler {
 		add_shortcode( 'mailgun_email', array( $this, 'email_shortcode' ) );
 		add_shortcode( 'mailgun_lists', array( $this, 'lists_shortcode' ) );
 		add_shortcode( 'mailgun_subscription_form', array( $this, 'form_shortcode' ) );
+		add_shortcode( Account_Management_Page::SHORTCODE, array( $this, 'account_management_shortcode' ) );
 	}
 
 	public function email_shortcode( $atts, $content = '', $tag = '' ) {
@@ -83,5 +84,10 @@ class Shortcode_Handler {
 		$lists = Plugin::instance()->get_lists('name');
 		$lists = wp_list_filter( $lists, array( 'hidden' => true ), 'NOT' );
 		return array_keys($lists);
+	}
+
+	public function account_management_shortcode( $atts, $content = '', $tag = '' ) {
+		$page = Plugin::instance()->account_management_page();
+		return $page->get_page_contents();
 	}
 } 

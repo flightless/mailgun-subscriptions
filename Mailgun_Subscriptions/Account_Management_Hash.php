@@ -1,0 +1,17 @@
+<?php
+
+
+namespace Mailgun_Subscriptions;
+
+
+class Account_Management_Hash {
+	private $email_address = '';
+
+	public function __construct( $email_address ) {
+		$this->email_address = $email_address;
+	}
+
+	public function get_hash() {
+		return wp_hash( $this->email_address, 'auth' );
+	}
+}

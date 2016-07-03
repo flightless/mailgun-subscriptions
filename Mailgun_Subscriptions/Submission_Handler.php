@@ -185,8 +185,8 @@ class Submission_Handler {
 
 	protected function get_redirect_base_url() {
 		$url = $_SERVER['REQUEST_URI'];
-		foreach ( array('mailgun-message', 'mailgun-error', 'mailgun-action', 'ref') as $key ) {
-			$url = remove_query_arg('key', $url);
+		foreach ( array('mailgun-message', 'mailgun-error', 'mailgun-action', 'ref', 'list', 'nonce') as $key ) {
+			$url = remove_query_arg( $key, $url );
 		}
 		return $url;
 	}
