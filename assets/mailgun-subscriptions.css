@@ -31,22 +31,24 @@
 }
 .mailgun-subscription-account-management .mailgun-subscription-details p {
 	margin: 0;
-	padding-left: 1.5em;
+	padding-left: 1em;
 }
 .mailgun-subscription-account-management .mailgun-subscription-details p.current-status {
 	padding-left: 0;
 }
 .mailgun-subscription-account-management .mailgun-subscription-details p.current-status::before {
 	display: inline-block;
-	width: 1em;
-	font-size: 1.5em;
-	line-height: 1;
+	width: .8em;
+	font-size: 1.25em;
+	line-height: 1.2;
+	position: relative;
+	top: 1px;
 }
 .mailgun-subscription-account-management .mailgun-subscription-details p.subscribe.current-status::before {
-	content: '\2611'; /* box with check */
+	content: '\2713'; /* check mark */
 	color: #23b225;
 }
 .mailgun-subscription-account-management .mailgun-subscription-details p.unsubscribe.current-status::before {
-	content: '\2612'; /* box with x */
+	content: '\2717'; /* box with x */
 	color: #d42626;
 }
