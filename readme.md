@@ -8,6 +8,8 @@ Install and activate just as a normal WordPress plugin.
 
 You'll find the "Mailgun Lists" settings page in the Settings admin menu. Here, you can setup your API keys, control which lists you're making available, and create custom descriptions for your lists.
 
+When the plugin is activated, the "Subscription Management" page will be automatically created for you. You can customize the title of this page, or set it to a different page using the option on the settings screen. If you accidentally delete the page, a new one will be created for you.
+
 ## Subscription Form Widget
 
 The plugin creates a widget called "Mailgun List Subscription Form". It includes options to set the title, an optional description, and the mailing lists that will be available in the widget.
@@ -35,7 +37,7 @@ The plugin creates a shortcode: `[mailgun_subscription_form]`. This displays the
 
 ### Confirmation Email
 
-You can set up templates for two emails the plugin will send.
+You can set up templates for three emails the plugin will send.
 
 When a user first submits the subscription form, the "Confirmation Email" is sent. Your template should contain the following shortcodes:
 
@@ -57,6 +59,7 @@ After the user confirms, the "Welcome Email" is sent. This template can include:
 
 * `[email]` - This is the user's email address.
 * `[lists]` - This is a list of the lists the user opted to subscribe to.
+* `[link]`  - This is the unique URL to the user's account management page.
 
 #### Filters
 
@@ -65,6 +68,18 @@ After the user confirms, the "Welcome Email" is sent. This template can include:
 `mailgun_welcome_email_template` - Edit the welcome email template.
 
 `mailgun_welcome_email_lists` - Edit the list of mailing lists in the email template.
+
+### Account Management Email
+
+When a user requests access to the account management page, they will receive this email. This template can include:
+
+* `[link]`  - This is the unique URL to the user's account management page.
+
+#### Filters
+
+`mailgun_token_email_subject` - Edit the subject of the welcome email.
+
+`mailgun_token_email_template` - Edit the account management email template.
 
 ## Confirmation Page
 
