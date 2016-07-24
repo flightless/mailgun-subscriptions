@@ -38,6 +38,14 @@ class Widget extends \WP_Widget {
 			'lists' => $instance['lists'],
 		));
 
+		if ( apply_filters( 'mailgun_subscriptions_widget_show_account_link', true ) ) {
+			$account_management_page = Plugin::instance()->account_management_page();
+			$link = $account_management_page->get_page_url();
+			if ( $link ) {
+				printf( '<p><a href="%s">%s</a></p>', esc_url( $link ), __( 'Manage your subscriptions', 'mailgun-subscriptions' ) );
+			}
+		}
+
 		echo $args['after_widget'];
 	}
 
