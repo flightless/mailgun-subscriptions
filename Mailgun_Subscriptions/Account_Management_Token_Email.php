@@ -3,6 +3,11 @@
 
 namespace Mailgun_Subscriptions;
 
+/**
+ * Class Account_Management_Token_Email
+ *
+ * Sends an email to the user with a link to manage their account.
+ */
 class Account_Management_Token_Email {
 	private $email_address = '';
 	
@@ -14,7 +19,7 @@ class Account_Management_Token_Email {
 		return wp_mail( $this->email_address, $this->get_subject(), $this->get_body() );
 	}
 
-	private function get_token_link() {
+	public function get_token_link() {
 		$hasher = new Account_Management_Hash( $this->email_address );
 		$hash = $hasher->get_hash();
 		$base_url = Plugin::instance()->account_management_page()->get_page_url();
@@ -26,12 +31,17 @@ class Account_Management_Token_Email {
 	}
 
 	private function get_subject() {
-		return 'Account Management'; // TODO: customizable
+		return apply_filters( 'mailgun_token_email_subject', sprintf( __( '[%s] Manage Your Subscriptions', 'mailgun-subscriptions' ), get_bloginfo('name') ) );
 	}
 
 	private function get_body() {
-		$link = $this->get_token_link();
-		$link = sprintf( '<a href="%s">%s</a>', esc_url_raw( $link ), esc_url( $link ) );
-		return $link; // TODO: customizable
+		$message = $this->get_token_message_template();
+		$message = str_replace( '[link]', esc_url_raw( $this->get_token_link() ), $message );
+		return $message;
+	}
+
+	protected function get_token_message_template() {
+		$template = get_option( 'mailgun_token_email_template', Template::token_email() );
+		return apply_filters( 'mailgun_token_email_template', $template );
 	}
 }

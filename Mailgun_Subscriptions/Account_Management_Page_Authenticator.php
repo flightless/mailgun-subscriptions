@@ -3,7 +3,11 @@
 
 namespace Mailgun_Subscriptions;
 
-
+/**
+ * Class Account_Management_Page_Authenticator
+ *
+ * Authenticates access to the account management page
+ */
 class Account_Management_Page_Authenticator {
 	const VALID        = 0;
 	const NO_USER      = 1;

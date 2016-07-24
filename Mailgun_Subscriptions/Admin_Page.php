@@ -150,6 +150,24 @@ class Admin_Page {
 			'mailgun_welcome_email_template'
 		);
 
+		add_settings_field(
+			'mailgun_token_email_template',
+			__('Account Management Email', 'mailgun-subscriptions'),
+			array( $this, 'display_textarea_field' ),
+			self::MENU_SLUG,
+			'confirmation',
+			array(
+				'option' => 'mailgun_token_email_template',
+				'description' => $this->get_token_email_field_description(),
+				'default' => Template::token_email(),
+			)
+		);
+
+		register_setting(
+			self::MENU_SLUG,
+			'mailgun_token_email_template'
+		);
+
 		register_setting(
 			self::MENU_SLUG,
 			'mailgun_lists'
@@ -395,7 +413,14 @@ class Admin_Page {
 	public function get_welcome_email_field_description() {
 		$description = __("This email will be sent to users after they confirm their subscription. Leave blank to disable this email. Your template can contain the following shortcodes:<br />
 			<code>[email]</code> &ndash; This is the user's email address.<br />
-			<code>[lists]</code> &ndash; This is a list of the lists the user opted to subscribe to.", 'mailgun-subscriptions' );
+			<code>[lists]</code> &ndash; This is a list of the lists the user opted to subscribe to.<br />
+			<code>[link]</code> &ndash; This is the URL to the user's account management page.", 'mailgun-subscriptions' );
+		return $description;
+	}
+
+	public function get_token_email_field_description() {
+		$description = __("This email will be sent to users when they request a link to their account management page. Your template can contain the following shortcodes:<br />
+			<code>[link]</code> &ndash; This is the URL to the user's account management page.", 'mailgun-subscriptions' );
 		return $description;
 	}
 

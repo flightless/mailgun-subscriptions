@@ -3,7 +3,11 @@
 
 namespace Mailgun_Subscriptions;
 
-
+/**
+ * Class Account_Management_Page
+ *
+ * Sets up and displays the account management page
+ */
 class Account_Management_Page {
 	const SHORTCODE = 'mailgun_account_management';
 	const ACTION_REQUEST_TOKEN = 'request-token';
@@ -39,6 +43,11 @@ class Account_Management_Page {
 		return (int)get_option( Admin_Page::OPTION_ACCOUNT_PAGE, 0 );
 	}
 
+	/**
+	 * Automatically creates the subscription management page
+	 *
+	 * @return void
+	 */
 	public function create_default_page() {
 		$this->page_id = wp_insert_post( array(
 			'post_type' => 'page',

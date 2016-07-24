@@ -98,6 +98,7 @@ class Confirmation_Handler {
 		$message = $this->get_welcome_message_template();
 		$message = str_replace( '[email]', $this->confirmation->get_address(), $message );
 		$message = str_replace( '[lists]', $this->get_formatted_lists(), $message );
+		$message = str_replace( '[link]', esc_url_raw( $this->get_account_management_url( $this->confirmation->get_address() ) ), $message );
 		return $message;
 	}
 
@@ -116,6 +117,11 @@ class Confirmation_Handler {
 			}
 		}
 		return apply_filters( 'mailgun_welcome_email_lists', implode("\n", $formatted), $requested_lists );
+	}
+
+	protected function get_account_management_url( $email_address ) {
+		$token_emailer = new Account_Management_Token_Email( $email_address );
+		return $token_emailer->get_token_link();
 	}
 
 	public function setup_page_data( $post ) {

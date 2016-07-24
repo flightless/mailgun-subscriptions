@@ -7,7 +7,6 @@ class Account_Management_Subscription_Request_Handler {
 	private $submission = array();
 	/** @var Account_Management_Page_Authenticator */
 	private $authenticator = null;
-	private $success = '';
 	private $error = '';
 	private $action = '';
 
