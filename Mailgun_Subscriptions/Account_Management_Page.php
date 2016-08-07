@@ -25,6 +25,7 @@ class Account_Management_Page {
 		if ( ! $this->page_id && current_user_can( 'edit_pages' ) ) {
 			$this->create_default_page();
 		}
+		add_action( 'template_redirect', array( $this, 'disable_caching' ), 0, 0 );
 		add_action( 'template_redirect', array( $this, 'setup_authentication_cookie' ), 10, 0 );
 
 		add_action( 'trashed_post', array( $this, 'listen_for_page_deletion' ) );
@@ -55,6 +56,25 @@ class Account_Management_Page {
 			'post_status' => 'publish',
 		));
 		update_option( Admin_Page::OPTION_ACCOUNT_PAGE, $this->page_id );
+	}
+
+	public function disable_caching() {
+		if ( get_queried_object_id() == $this->get_page_id_option() ) {
+			$this->do_not_cache();
+		}
+	}
+
+	/**
+	 * Set headers to try to disable page caching for the current request
+	 */
+	public function do_not_cache() {
+		nocache_headers(); // reverse proxies, browsers
+		if ( !defined('DONOTCACHEPAGE') ) {
+			define('DONOTCACHEPAGE', TRUE); // W3TC, supercache
+		}
+		if ( function_exists('batcache_cancel') ) {
+			batcache_cancel(); // batcache
+		}
 	}
 
 	public function setup_authentication_cookie() {

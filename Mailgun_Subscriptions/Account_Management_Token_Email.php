@@ -24,8 +24,8 @@ class Account_Management_Token_Email {
 		$hash = $hasher->get_hash();
 		$base_url = Plugin::instance()->account_management_page()->get_page_url();
 		$url = add_query_arg( array(
-			Account_Management_Page_Authenticator::EMAIL_ARG => $this->email_address,
-			Account_Management_Page_Authenticator::HASH_ARG => $hash,
+			Account_Management_Page_Authenticator::EMAIL_ARG => urlencode( $this->email_address ),
+			Account_Management_Page_Authenticator::HASH_ARG => urlencode( $hash ),
 		), $base_url );
 		return $url;
 	}
