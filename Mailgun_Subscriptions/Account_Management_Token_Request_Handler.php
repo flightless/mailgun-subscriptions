@@ -28,10 +28,22 @@ class Account_Management_Token_Request_Handler {
 	protected function is_valid_submission() {
 		if ( empty( $this->submission[ Account_Management_Page::EMAIL_ADDRESS_FIELD ] ) ) {
 			$this->error = 'no-email';
-		} elseif ( empty( $this->submission[ '_wp_nonce'] ) || ! wp_verify_nonce( $this->submission[ '_wp_nonce'], Account_Management_Page::ACTION_REQUEST_TOKEN ) ) {
-			$this->error = 'invalid-nonce';
+			return false;
 		}
-		return empty($this->errors);
+		if ( empty( $this->submission[ '_wpnonce'] ) || ! wp_verify_nonce( $this->submission[ '_wpnonce'], Account_Management_Page::ACTION_REQUEST_TOKEN ) ) {
+			$this->error = 'invalid-nonce';
+			return false;
+		}
+		if ( ! $this->is_valid_email( $this->submission[ Account_Management_Page::EMAIL_ADDRESS_FIELD ] ) ) {
+			$this->error = 'invalid-email';
+			return false;
+		}
+		return true;
+	}
+
+	private function is_valid_email( $email_address ) {
+		$api = Plugin::instance()->api( true );
+		return (bool) ( $api->validate_email( $email_address ) );
 	}
 
 	protected function do_success_redirect() {

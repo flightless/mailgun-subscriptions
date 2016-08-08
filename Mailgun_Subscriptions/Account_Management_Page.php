@@ -335,6 +335,8 @@ class Account_Management_Page {
 				return __( 'Please verify that you have entered your email address correctly.', 'mailgun-subscriptions' );
 			case 'invalid-nonce':
 				return __( 'We were unable to validate your request. Please try submitting the form again.', 'mailgun-subscriptions' );
+			case 'invalid-email':
+				return __( 'We did not understand your email address. Please try submitting the form again.', 'mailgun-subscriptions' );
 			case 'invalid-hash':
 				return __( 'Your login URL has expired. Please request a new one.', 'mailgun-subscriptions' );
 			default:
