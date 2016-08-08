@@ -5,7 +5,7 @@ namespace Mailgun_Subscriptions;
 
 
 class Plugin {
-	const VERSION = '1.1';
+	const VERSION = '1.1.1';
 
 	/** @var Plugin */
 	private static $instance = NULL;
