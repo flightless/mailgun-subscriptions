@@ -198,6 +198,12 @@ class Admin_Page {
 				'default' => 0,
 			)
 		);
+
+		register_setting(
+			self::MENU_SLUG,
+			self::OPTION_ACCOUNT_PAGE,
+			'intval'
+		);
 	}
 
 	public function display() {
