@@ -3,9 +3,9 @@ Contributors: jbrinley
 Tags: mailing lists, subscriptions, widget, email
 Requires at least: 3.9
 Tested up to: 4.6
-Stable tag: 1.1.1
-License: BSD 3-Clause
-License URI: http://opensource.org/licenses/BSD-3-Clause
+Stable tag: 1.1.2
+License: GPL-2.0
+License URI: https://opensource.org/licenses/GPL-2.0
 
 Add a Mailgun subscription form to your WordPress site. Your visitors can use the form to subscribe to your lists using the Mailgun API.
 
