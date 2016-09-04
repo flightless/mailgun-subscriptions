@@ -1,0 +1,18 @@
+{
+    "name": "flightless/mailgun-subscriptions",
+    "description": "A WordPress widget for subscribing to mailing lists powered by MailGun",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Flightless, Inc.",
+            "email": "jbrinley@flightless.us"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Mailgun_Subscriptions\\": "Mailgun_Subscriptions"
+        }
+    }
+}

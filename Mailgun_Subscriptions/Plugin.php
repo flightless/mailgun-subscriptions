@@ -67,7 +67,6 @@ class Plugin {
 
 	private function setup( $plugin_file ) {
 		self::$plugin_file = $plugin_file;
-		spl_autoload_register( array( __CLASS__, 'autoload' ) );
 		if ( is_admin() ) {
 			$this->setup_admin_page();
 		}
@@ -203,17 +202,5 @@ class Plugin {
 			self::$instance = new self();
 		}
 		return self::$instance;
-	}
-
-	public static function autoload( $class ) {
-		if (substr($class, 0, strlen(__NAMESPACE__)) != __NAMESPACE__) {
-			//Only autoload libraries from this package
-			return;
-		}
-		$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-		$path = dirname(self::$plugin_file) . DIRECTORY_SEPARATOR . $path . '.php';
-		if (file_exists($path)) {
-			require $path;
-		}
 	}
 } 
