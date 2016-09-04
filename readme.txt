@@ -20,6 +20,16 @@ Add a Mailgun subscription form to your WordPress site. Your visitors can use th
 
 == Changelog ==
 
+= 1.1.2 =
+
+* Fix fatal error during uninstall
+* Fix error saving account management page ID
+
+= 1.1.1 =
+
+* Validate email address when requesting token to manage account
+* Disable caching of subscription management page
+
 = 1.1 =
 
 * New feature: subscription management
