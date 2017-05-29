@@ -17,6 +17,14 @@ class Null_Confirmation extends Confirmation {
 		return '';
 	}
 
+	public function set_name( $name ) {
+		// do nothing
+	}
+
+	public function get_name() {
+		return '';
+	}
+
 	public function set_lists( array $lists ) {
 		// do nothing
 	}

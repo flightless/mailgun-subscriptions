@@ -10,6 +10,7 @@ class Confirmation {
 	protected $id = '';
 	protected $post_id = '';
 	protected $address = '';
+	protected $name = '';
 	protected $confirmed = FALSE;
 	protected $lists = array();
 
@@ -42,6 +43,19 @@ class Confirmation {
 		return $this->lists;
 	}
 
+	/**
+	 * @param string $name
+	 */
+	public function set_name( $name ) {
+		$this->name = $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_name() {
+		return $this->name;
+	}
 
 	public function save() {
 		if ( !$this->post_id ) {
@@ -56,6 +70,7 @@ class Confirmation {
 		}
 		delete_post_meta( $this->post_id, '_mailgun_subscriber_lists' );
 		update_post_meta( $this->post_id, '_mailgun_subscriber_address', $this->address );
+		update_post_meta( $this->post_id, '_mailgun_subscriber_name', $this->name );
 		update_post_meta( $this->post_id, '_mailgun_subscription_confirmed', $this->confirmed );
 		foreach ( $this->lists as $list ) {
 			add_post_meta( $this->post_id, '_mailgun_subscriber_lists', $list );
@@ -81,6 +96,7 @@ class Confirmation {
 		}
 		$this->post_id = reset($results);
 		$this->address = get_post_meta($this->post_id, '_mailgun_subscriber_address', true);
+		$this->name = get_post_meta($this->post_id, '_mailgun_subscriber_name', true);
 		$this->lists = get_post_meta($this->post_id, '_mailgun_subscriber_lists', false);
 		$this->confirmed = get_post_meta($this->post_id, '_mailgun_subscription_confirmed', true);
 	}

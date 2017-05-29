@@ -116,6 +116,18 @@ class Subscription_Form {
 			$this->print_solitary_list($list);
 			echo '</p>';
 		}
+		if ( !empty($instance['name']) ) {
+			echo '<p class="full-name">';
+			printf( '<label for="mailgun-full-name-%d">%s</label> ', $instance_counter, __('Full Name', 'mailgun-subscriptions') );
+			$default_name = '';
+			if ( is_user_logged_in() ) {
+				$user = wp_get_current_user();
+				$default_name = trim( sprintf('%s %s', $user->user_firstname, $user->user_lastname) );
+			}
+			printf( '<input type="text" value="%s" name="mailgun-subscriber-name" size="20" id="mailgun-full-name-%d" required />', $default_name, $instance_counter );
+			echo '</p>';
+		}
+
 		echo '<p class="email-address">';
 		printf( '<label for="mailgun-email-address-%d">%s</label> ', $instance_counter, __('Email Address', 'mailgun-subscriptions') );
 		$default_email = '';
