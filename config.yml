@@ -1,4 +1,5 @@
 bump:
+  const version: Mailgun_Subscriptions/Plugin.php
   stable tag: readme.txt
   version: mailgun-subscriptions.php
 dest:

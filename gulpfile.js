@@ -64,7 +64,7 @@ gulp.task('bump', function() {
   ['patch', 'minor', 'major'].some(function(arg) {
     if(!args[arg])return;
     for(var key in config.bump) {
-      gulp.src(config.bump[key]).pipe(bump({
+      gulp.src(config.bump[key], {base:'.'}).pipe(bump({
         type: arg,
         key: key,
       })).pipe(gulp.dest('.'));
