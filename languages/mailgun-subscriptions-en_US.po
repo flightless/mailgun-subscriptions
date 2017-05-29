@@ -1,0 +1,435 @@
+# Copyright (C) 2017 mailgun-subscriptions
+# This file is distributed under the same license as the mailgun-subscriptions package.
+msgid ""
+msgstr ""
+"Project-Id-Version: mailgun-subscriptions\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Flightless\n"
+"Last-Translator: Flightless\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Keywordslist: "
+"__;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_"
+"attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Searchpath-0: .\n"
+"X-Poedit-Searchpathexcluded-0: *.js\n"
+"X-Poedit-Sourcecharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: qps-ploc\n"
+
+#: mailgun-subscriptions.php:42
+msgid ""
+"MailGun Mailing List Subscriptions requires PHP version %s or higher. You "
+"are using version %s."
+msgstr ""
+"MailGun Mailing List Subscriptions requires PHP version %s or higher. You "
+"are using version %s."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:55
+msgid "Subscription Management"
+msgstr "Subscription Management"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:165
+msgid "Email Address: <strong>%s</strong>"
+msgstr "Email Address: <strong>%s</strong>"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:209
+msgid "Subscribed"
+msgstr "Subscribed"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:211
+msgid "Unsubscribe »"
+msgstr "Unsubscribe »"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:219, Mailgun_Subscriptions/Account_Management_Page.php:228, Mailgun_Subscriptions/Account_Management_Page.php:237, Mailgun_Subscriptions/Account_Management_Page.php:246, Mailgun_Subscriptions/Account_Management_Page.php:255
+msgid "Subscribe »"
+msgstr "Subscribe »"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:220
+msgid "Not subscribed"
+msgstr "Not subscribed"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:229
+msgid "Unsubscribed"
+msgstr "Unsubscribed"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:238
+msgid ""
+"Unsubscribed <span class=\"description\">(you have requested to unsubscribe "
+"from all emails from this domain)</span>"
+msgstr ""
+"Unsubscribed <span class=\"description\">(you have requested to unsubscribe "
+"from all emails from this domain)</span>"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:247
+msgid ""
+"Unsubscribed <span class=\"description\">(you reported this list as "
+"spam)</span>"
+msgstr ""
+"Unsubscribed <span class=\"description\">(you reported this list as "
+"spam)</span>"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:256
+msgid "Unsubscribed <span class=\"description\">(your email address bounced)</span>"
+msgstr "Unsubscribed <span class=\"description\">(your email address bounced)</span>"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:309
+msgid ""
+"Fill in your email address below and we'll send you a link to log in and "
+"manage your account."
+msgstr ""
+"Fill in your email address below and we'll send you a link to log in and "
+"manage your account."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:310
+msgid "e-mail address"
+msgstr "e-mail address"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:311
+msgid "Send e-mail"
+msgstr "Send e-mail"
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:329, Mailgun_Subscriptions/Subscription_Form.php:55
+msgid "Please check your email for a link to confirm your subscription."
+msgstr "Please check your email for a link to confirm your subscription."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:331
+msgid "Subscription updated."
+msgstr "Subscription updated."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:333
+msgid "Request submitted. Your email should be arriving shortly."
+msgstr "Request submitted. Your email should be arriving shortly."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:335
+msgid "Please verify that you have entered your email address correctly."
+msgstr "Please verify that you have entered your email address correctly."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:337
+msgid ""
+"We were unable to validate your request. Please try submitting the form "
+"again."
+msgstr ""
+"We were unable to validate your request. Please try submitting the form "
+"again."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:339
+msgid ""
+"We did not understand your email address. Please try submitting the form "
+"again."
+msgstr ""
+"We did not understand your email address. Please try submitting the form "
+"again."
+
+#: Mailgun_Subscriptions/Account_Management_Page.php:341
+msgid "Your login URL has expired. Please request a new one."
+msgstr "Your login URL has expired. Please request a new one."
+
+#: Mailgun_Subscriptions/Account_Management_Subscription_Request_Handler.php:17
+msgid "No action provided"
+msgstr "No action provided"
+
+#: Mailgun_Subscriptions/Account_Management_Token_Email.php:34
+msgid "[%s] Manage Your Subscriptions"
+msgstr "[%s] Manage Your Subscriptions"
+
+#: Mailgun_Subscriptions/Admin_Page.php:22, Mailgun_Subscriptions/Admin_Page.php:210
+msgid "Mailgun Mailing Lists"
+msgstr "Mailgun Mailing Lists"
+
+#: Mailgun_Subscriptions/Admin_Page.php:23
+msgid "Mailgun Lists"
+msgstr "Mailgun Lists"
+
+#: Mailgun_Subscriptions/Admin_Page.php:30
+msgid "API Credentials"
+msgstr "API Credentials"
+
+#: Mailgun_Subscriptions/Admin_Page.php:36
+msgid "API Key"
+msgstr "API Key"
+
+#: Mailgun_Subscriptions/Admin_Page.php:51
+msgid "API Public Key"
+msgstr "API Public Key"
+
+#: Mailgun_Subscriptions/Admin_Page.php:70
+msgid "Available Lists"
+msgstr "Available Lists"
+
+#: Mailgun_Subscriptions/Admin_Page.php:77
+msgid "Subscription Confirmation"
+msgstr "Subscription Confirmation"
+
+#: Mailgun_Subscriptions/Admin_Page.php:84
+msgid "Confirmation Page"
+msgstr "Confirmation Page"
+
+#: Mailgun_Subscriptions/Admin_Page.php:101
+msgid "Expiration Period"
+msgstr "Expiration Period"
+
+#: Mailgun_Subscriptions/Admin_Page.php:107
+msgid "Subscription requests will become invalid after this many days"
+msgstr "Subscription requests will become invalid after this many days"
+
+#: Mailgun_Subscriptions/Admin_Page.php:120
+msgid "Confirmation Email"
+msgstr "Confirmation Email"
+
+#: Mailgun_Subscriptions/Admin_Page.php:137
+msgid "Welcome Email"
+msgstr "Welcome Email"
+
+#: Mailgun_Subscriptions/Admin_Page.php:155
+msgid "Account Management Email"
+msgstr "Account Management Email"
+
+#: Mailgun_Subscriptions/Admin_Page.php:184
+msgid "Account Management"
+msgstr "Account Management"
+
+#: Mailgun_Subscriptions/Admin_Page.php:191
+msgid "Account Management Page"
+msgstr "Account Management Page"
+
+#: Mailgun_Subscriptions/Admin_Page.php:212
+msgid "Save Settings"
+msgstr "Save Settings"
+
+#: Mailgun_Subscriptions/Admin_Page.php:273
+msgid "Address"
+msgstr "Address"
+
+#: Mailgun_Subscriptions/Admin_Page.php:274
+msgid "Name"
+msgstr "Name"
+
+#: Mailgun_Subscriptions/Admin_Page.php:275
+msgid "Description"
+msgstr "Description"
+
+#: Mailgun_Subscriptions/Admin_Page.php:276
+msgid "Hidden"
+msgstr "Hidden"
+
+#: Mailgun_Subscriptions/Admin_Page.php:293
+msgid "Create a new list"
+msgstr "Create a new list"
+
+#: Mailgun_Subscriptions/Admin_Page.php:387
+msgid "-- New Page --"
+msgstr "-- New Page --"
+
+#: Mailgun_Subscriptions/Admin_Page.php:400
+msgid "Subscription Confirmed"
+msgstr "Subscription Confirmed"
+
+#: Mailgun_Subscriptions/Admin_Page.php:412
+msgid ""
+"This email will contain a link for users to confirm their subscriptions. "
+"Your template should contain the following shortcodes:<br />\n"
+"\t\t\t<code>[link]</code> &ndash; This becomes a link back to your site "
+"with a unique code to confirm the user's subscription request.<br />\n"
+"\t\t\t<code>[email]</code> &ndash; This is the user's email address.<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; This is a list of the lists the user "
+"opted to subscribe to."
+msgstr ""
+"This email will contain a link for users to confirm their subscriptions. "
+"Your template should contain the following shortcodes:<br />\n"
+"\t\t\t<code>[link]</code> &ndash; This becomes a link back to your site "
+"with a unique code to confirm the user's subscription request.<br />\n"
+"\t\t\t<code>[email]</code> &ndash; This is the user's email address.<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; This is a list of the lists the user "
+"opted to subscribe to."
+
+#: Mailgun_Subscriptions/Admin_Page.php:420
+msgid ""
+"This email will be sent to users after they confirm their subscription. "
+"Leave blank to disable this email. Your template can contain the following "
+"shortcodes:<br />\n"
+"\t\t\t<code>[email]</code> &ndash; This is the user's email address.<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; This is a list of the lists the user "
+"opted to subscribe to.<br />\n"
+"\t\t\t<code>[link]</code> &ndash; This is the URL to the user's account "
+"management page."
+msgstr ""
+"This email will be sent to users after they confirm their subscription. "
+"Leave blank to disable this email. Your template can contain the following "
+"shortcodes:<br />\n"
+"\t\t\t<code>[email]</code> &ndash; This is the user's email address.<br />\n"
+"\t\t\t<code>[lists]</code> &ndash; This is a list of the lists the user "
+"opted to subscribe to.<br />\n"
+"\t\t\t<code>[link]</code> &ndash; This is the URL to the user's account "
+"management page."
+
+#: Mailgun_Subscriptions/Admin_Page.php:428
+msgid ""
+"This email will be sent to users when they request a link to their account "
+"management page. Your template can contain the following shortcodes:<br />\n"
+"\t\t\t<code>[link]</code> &ndash; This is the URL to the user's account "
+"management page."
+msgstr ""
+"This email will be sent to users when they request a link to their account "
+"management page. Your template can contain the following shortcodes:<br />\n"
+"\t\t\t<code>[link]</code> &ndash; This is the URL to the user's account "
+"management page."
+
+#: Mailgun_Subscriptions/Admin_Page.php:434
+msgid ""
+"Select which Page of your site will be used to display the Account "
+"Management page"
+msgstr ""
+"Select which Page of your site will be used to display the Account "
+"Management page"
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:94
+msgid "[%s] Your Subscription Is Confirmed"
+msgstr "[%s] Your Subscription Is Confirmed"
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:143
+msgid "Error Confirming Your Subscription"
+msgstr "Error Confirming Your Subscription"
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:149
+msgid "Your request could not be found. Please try again."
+msgstr "Your request could not be found. Please try again."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:152
+msgid "There are no mailing lists associated with your request. Please try again."
+msgstr "There are no mailing lists associated with your request. Please try again."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:155
+msgid "You have already confirmed your request."
+msgstr "You have already confirmed your request."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:158
+msgid "Your request has expired. Please try again."
+msgstr "Your request has expired. Please try again."
+
+#: Mailgun_Subscriptions/Confirmation_Handler.php:161
+msgid "We experienced a problem setting up your subscription. Please try again."
+msgstr "We experienced a problem setting up your subscription. Please try again."
+
+#: Mailgun_Subscriptions/Post_Type_Registrar.php:18
+msgid "Mailgun Confirmation"
+msgstr "Mailgun Confirmation"
+
+#: Mailgun_Subscriptions/Shortcode_Handler.php:54
+msgid "%1$s (%2$s)"
+msgstr "%1$s (%2$s)"
+
+#: Mailgun_Subscriptions/Submission_Handler.php:121
+msgid "[%s] Confirm Your Subscription"
+msgstr "[%s] Confirm Your Subscription"
+
+#: Mailgun_Subscriptions/Subscription_Form.php:58
+msgid "Please select a mailing list."
+msgstr "Please select a mailing list."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:61
+msgid "Please enter your email address."
+msgstr "Please enter your email address."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:64
+msgid "Please verify your email address."
+msgstr "Please verify your email address."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:67
+msgid ""
+"You have previously unsubscribed. Please contact us to reactivate your "
+"account."
+msgstr ""
+"You have previously unsubscribed. Please contact us to reactivate your "
+"account."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:70
+msgid ""
+"You are already subscribed. Please contact us if you have trouble receiving "
+"messages."
+msgstr ""
+"You are already subscribed. Please contact us if you have trouble receiving "
+"messages."
+
+#: Mailgun_Subscriptions/Subscription_Form.php:120
+msgid "Email Address"
+msgstr "Email Address"
+
+#: Mailgun_Subscriptions/Subscription_Form.php:128, Mailgun_Subscriptions/Widget.php:62
+msgid "Subscribe"
+msgstr "Subscribe"
+
+#: Mailgun_Subscriptions/Template.php:9
+msgid ""
+"Thank you for subscribing. Please visit [link] to confirm your subscription "
+"for [email] to the following lists:\n"
+"\n"
+"[lists]"
+msgstr ""
+"Thank you for subscribing. Please visit [link] to confirm your subscription "
+"for [email] to the following lists:\n"
+"\n"
+"[lists]"
+
+#: Mailgun_Subscriptions/Template.php:13
+msgid ""
+"Your email address, [email], has been confirmed. You are now subscribed to "
+"the following lists:\n"
+"\n"
+"[lists]\n"
+"\n"
+"To manage your subscriptions, visit:\n"
+"\n"
+"[link]"
+msgstr ""
+"Your email address, [email], has been confirmed. You are now subscribed to "
+"the following lists:\n"
+"\n"
+"[lists]\n"
+"\n"
+"To manage your subscriptions, visit:\n"
+"\n"
+"[link]"
+
+#: Mailgun_Subscriptions/Template.php:17
+msgid ""
+"<p>Thank you for confirming your subscription. "
+"<strong>[mailgun_email]</strong> is now subscribed to:</p>[mailgun_lists]"
+msgstr ""
+"<p>Thank you for confirming your subscription. "
+"<strong>[mailgun_email]</strong> is now subscribed to:</p>[mailgun_lists]"
+
+#: Mailgun_Subscriptions/Template.php:21
+msgid ""
+"To manage your subscriptions, visit:\n"
+"\n"
+"[link]"
+msgstr ""
+"To manage your subscriptions, visit:\n"
+"\n"
+"[link]"
+
+#: Mailgun_Subscriptions/Widget.php:10
+msgid "A mailgun list subscription form"
+msgstr "A mailgun list subscription form"
+
+#: Mailgun_Subscriptions/Widget.php:12
+msgid "Mailgun List Subscription Form"
+msgstr "Mailgun List Subscription Form"
+
+#: Mailgun_Subscriptions/Widget.php:45
+msgid "Manage your subscriptions"
+msgstr "Manage your subscriptions"
+
+#: Mailgun_Subscriptions/Widget.php:78
+msgid "Title:"
+msgstr "Title:"
+
+#: Mailgun_Subscriptions/Widget.php:81
+msgid "Description:"
+msgstr "Description:"
+
+#: Mailgun_Subscriptions/Widget.php:84
+msgid "Options:"
+msgstr "Options:"
