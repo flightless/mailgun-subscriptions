@@ -1,0 +1,6 @@
+*        text=auto
+/.*      export-ignore
+/*.js    export-ignore
+/*.json  export-ignore
+/*.lock  export-ignore
+/*.yml   export-ignore
