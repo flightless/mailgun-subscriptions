@@ -135,7 +135,7 @@ class Subscription_Form {
 			$user = wp_get_current_user();
 			$default_email = $user->user_email;
 		}
-		printf( '<input type="text" value="%s" name="mailgun-subscriber-email" size="20" id="mailgun-email-address-%d" />', $default_email, $instance_counter );
+		printf( '<input type="text" value="%s" name="mailgun-subscriber-email" size="20" id="mailgun-email-address-%d" required />', $default_email, $instance_counter );
 		echo '</p>';
 		printf( '<p class="submit"><input type="submit" value="%s" /></p>', apply_filters( 'mailgun_subscription_form_button_label', __('Subscribe', 'mailgun-subscriptions') ) );
 		echo '</form>';
