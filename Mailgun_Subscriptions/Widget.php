@@ -85,9 +85,9 @@ class Widget extends \WP_Widget {
 			<ul>
 				<?php foreach ( Plugin::instance()->get_lists('name') as $list_address => $list_settings ): ?>
 					<li>
-						<label><input type="checkbox" value="<?php esc_attr_e($list_address); ?>" name="<?php echo $this->get_field_name('lists'); ?>[]"
+						<label><input type="checkbox" value="<?php echo esc_attr($list_address); ?>" name="<?php echo $this->get_field_name('lists'); ?>[]"
 								<?php checked(in_array($list_address, $lists)); ?>
-								/> <?php esc_html_e($list_settings['name']); ?></label>
+								/> <?php echo esc_html($list_settings['name']); ?></label>
 					</li>
 				<?php endforeach; ?>
 			</ul>
