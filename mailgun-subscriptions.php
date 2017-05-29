@@ -13,7 +13,7 @@ Domain Path: /languages
 if ( !function_exists('mailgun_subscriptions_load') ) {
 
 	function mailgun_subscriptions_load() {
-		require_once( __DIR__ . '/vendor/autoload.php' );
+		require_once( __DIR__ . '/autoload.php' );
 		add_action( 'init', 'mailgun_load_textdomain', 10, 0 );
 		if ( mailgun_subscriptions_version_check() ) {
 			\Mailgun_Subscriptions\Plugin::init(__FILE__);
