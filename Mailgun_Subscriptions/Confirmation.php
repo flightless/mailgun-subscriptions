@@ -64,7 +64,7 @@ class Confirmation {
 				'post_type' => self::POST_TYPE,
 				'post_status' => 'publish',
 				'post_author' => 0,
-				'post_title' => $this->id,
+				'post_title' => sprintf( '%s (%s)', get_post_type_object( static::POST_TYPE )->labels->singular_name, $this->id ),
 				'post_name' => $this->id,
 			));
 		}
