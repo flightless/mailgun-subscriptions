@@ -69,11 +69,13 @@ class Confirmation_Handler {
 
 	protected function do_subscription() {
 		$address = $this->confirmation->get_address();
+		$name = $this->confirmation->get_name();
 		$lists = $this->confirmation->get_lists();
 		$api = Plugin::instance()->api();
 		foreach ( $lists as $list_address ) {
 			$response = $api->post("lists/$list_address/members", array(
 				'address' => $address,
+				'name' => $name,
 				'upsert' => 'yes',
 			));
 			if ( !$response && $response['response']['code'] != 200 ) {

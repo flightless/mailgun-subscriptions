@@ -12,7 +12,7 @@ When the plugin is activated, the "Subscription Management" page will be automat
 
 ## Subscription Form Widget
 
-The plugin creates a widget called "Mailgun List Subscription Form". It includes options to set the title, an optional description, and the mailing lists that will be available in the widget.
+The plugin creates a widget called "Mailgun List Subscription Form". It includes options to set the title, an optional description, whether or not to require the user's name, and the mailing lists that will be available in the widget.
 
 ## Shortcode
 
@@ -20,6 +20,7 @@ The plugin creates a shortcode: `[mailgun_subscription_form]`. This displays the
 
 * `lists` - The email addresses of the lists that should be available in the form.
 * `description` - The description that will display above the form.
+* `name` - Whether or not to require the user to provide a name with their email (true/false value).
 
 ### Hooks
 

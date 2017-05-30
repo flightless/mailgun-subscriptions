@@ -116,6 +116,13 @@ class Subscription_Form {
 			$this->print_solitary_list($list);
 			echo '</p>';
 		}
+		if ( !empty($instance['name']) ) {
+			echo '<p class="full-name">';
+			printf( '<label for="mailgun-full-name-%d">%s</label> ', $instance_counter, __('Full Name', 'mailgun-subscriptions') );
+			printf( '<input type="text" name="mailgun-subscriber-name" size="20" id="mailgun-full-name-%d" required placeholder="%s" />', $instance_counter, __('Full Name', 'mailgun-subscriptions') );
+			echo '</p>';
+		}
+
 		echo '<p class="email-address">';
 		printf( '<label for="mailgun-email-address-%d">%s</label> ', $instance_counter, __('Email Address', 'mailgun-subscriptions') );
 		$default_email = '';
@@ -123,7 +130,7 @@ class Subscription_Form {
 			$user = wp_get_current_user();
 			$default_email = $user->user_email;
 		}
-		printf( '<input type="text" value="%s" name="mailgun-subscriber-email" size="20" id="mailgun-email-address-%d" />', $default_email, $instance_counter );
+		printf( '<input type="text" value="%s" name="mailgun-subscriber-email" size="20" id="mailgun-email-address-%d" required placeholder="%s" />', $default_email, $instance_counter, __('Email', 'mailgun-subscriptions') );
 		echo '</p>';
 		printf( '<p class="submit"><input type="submit" value="%s" /></p>', apply_filters( 'mailgun_subscription_form_button_label', __('Subscribe', 'mailgun-subscriptions') ) );
 		echo '</form>';
@@ -168,4 +175,4 @@ class Subscription_Form {
 		}
 		return $url;
 	}
-} 
+}

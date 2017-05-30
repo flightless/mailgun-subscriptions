@@ -36,6 +36,7 @@ class Widget extends \WP_Widget {
 		$form->display(array(
 			'description' => $content,
 			'lists' => $instance['lists'],
+			'name' => isset($instance['name']),
 		));
 
 		if ( apply_filters( 'mailgun_subscriptions_widget_show_account_link', true ) ) {
@@ -50,10 +51,8 @@ class Widget extends \WP_Widget {
 	}
 
 	public function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
+		$instance = $new_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
-		$instance['content'] = $new_instance['content'];
-		$instance['lists'] = $new_instance['lists'];
 		return $instance;
 	}
 
@@ -81,7 +80,12 @@ class Widget extends \WP_Widget {
 		<p><label for="<?php echo $this->get_field_id('content'); ?>"><?php _e('Description:', 'mailgun-subscriptions'); ?></label>
 			<textarea class="widefat" id="<?php echo $this->get_field_id('content'); ?>" name="<?php echo $this->get_field_name('content'); ?>"><?php echo esc_textarea($content); ?></textarea></p>
 
-		<p><label for="<?php echo $this->get_field_id('lists'); ?>"><?php _e('Options:', 'mailgun-subscriptions'); ?></label>
+		<p>
+		<input class="widefat" id="<?php echo $this->get_field_id('name'); ?>" name="<?php echo $this->get_field_name('name'); ?>" type="checkbox" <?php checked(isset($instance['name']) && $instance['name'] === 'on'); ?> />
+		<label for="<?php echo $this->get_field_id('name'); ?>"><?php _e('Require name?', 'mailgun-subscriptions'); ?></label>
+		</p>
+
+		<p><label for="<?php echo $this->get_field_id('lists'); ?>"><?php _e('List Options:', 'mailgun-subscriptions'); ?></label>
 			<ul>
 				<?php foreach ( Plugin::instance()->get_lists('name') as $list_address => $list_settings ): ?>
 					<li>

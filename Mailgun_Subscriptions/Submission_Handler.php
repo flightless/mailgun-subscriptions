@@ -91,6 +91,7 @@ class Submission_Handler {
 	protected function save_subscription_request() {
 		$confirmation = new Confirmation();
 		$confirmation->set_address($this->get_submitted_address());
+		$confirmation->set_name($this->get_submitted_name());
 		$confirmation->set_lists($this->get_submitted_lists());
 		$confirmation->save();
 		return $confirmation->get_id();
@@ -99,6 +100,11 @@ class Submission_Handler {
 	protected function get_submitted_address() {
 		$address = isset($this->submission['mailgun-subscriber-email']) ? $this->submission['mailgun-subscriber-email'] : '';
 		return $address;
+	}
+
+	protected function get_submitted_name() {
+		$name = isset($this->submission['mailgun-subscriber-name']) ? $this->submission['mailgun-subscriber-name'] : '';
+		return $name;
 	}
 
 	protected function get_submitted_lists() {
