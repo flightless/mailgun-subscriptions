@@ -342,7 +342,7 @@ class Admin_Page {
 	private function clear_invalid_lists() {
 		$lists = $this->get_mailing_lists_from_cache();
 		$addresses = wp_list_pluck( $lists, 'address' );
-		$saved = get_option('mailgun_lists');
+		$saved = (array) get_option('mailgun_lists');
 		$gone = array_diff( array_keys($saved), $addresses );
 		if ( !empty($gone) ) {
 			foreach ( $gone as $address ) {
