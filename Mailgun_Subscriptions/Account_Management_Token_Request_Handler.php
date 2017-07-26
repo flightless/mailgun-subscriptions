@@ -42,8 +42,12 @@ class Account_Management_Token_Request_Handler {
 	}
 
 	private function is_valid_email( $email_address ) {
-		$api = Plugin::instance()->api( true );
-		return (bool) ( $api->validate_email( $email_address ) );
+		if ( apply_filters( 'mailgun_subscriptions_validate_email_with_api', false ) ) {
+			$valid = Plugin::instance()->api( TRUE )->validate_email( $email_address );
+		} else {
+			$valid = is_email( $email_address );
+		}
+		return (bool) $valid;
 	}
 
 	protected function do_success_redirect() {
