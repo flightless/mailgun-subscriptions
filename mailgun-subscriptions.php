@@ -5,7 +5,7 @@ Plugin URI: https://github.com/flightless/mailgun-subscriptions
 Description: A widget for visitors to subscribe to Mailgun mailing lists
 Author: Flightless
 Author URI: http://flightless.us/
-Version: 1.1.2
+Version: 1.2.0
 Text Domain: mailgun-subscriptions
 Domain Path: /languages
 */

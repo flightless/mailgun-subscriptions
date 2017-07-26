@@ -3,7 +3,7 @@ Contributors: jbrinley
 Tags: mailing lists, subscriptions, widget, email
 Requires at least: 3.9
 Tested up to: 4.6
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 License: GPL-2.0
 License URI: https://opensource.org/licenses/GPL-2.0
 
@@ -19,6 +19,12 @@ Add a Mailgun subscription form to your WordPress site. Your visitors can use th
 1. You'll find the "Mailgun Lists" settings page in the Settings admin menu. Here, you can setup your API keys, control which lists you're making available, and create custom descriptions for your lists.
 
 == Changelog ==
+
+= 1.2.0 =
+
+* Optional name field for the subscription widget (credit to Paul Ryley)
+* Fix PHP notice when first loading admin page
+* Default to WordPress email validation, with filter to use MailGun API
 
 = 1.1.2 =
 
