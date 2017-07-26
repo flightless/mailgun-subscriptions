@@ -23,7 +23,7 @@ class Account_Management_Subscription_Request_Handler {
 		if ( $this->is_valid_submission() ) {
 			switch ( $this->action ) {
 				case 'account-subscribe':
-					$this->handle_subscribe_request( $this->authenticator->get_email(), $this->submission[ 'list' ] );
+					$this->handle_subscribe_request( $this->authenticator->get_email(), $this->submission[ 'list' ], $this->submission[ 'name' ] );
 					break;
 				case 'account-unsubscribe':
 					$this->handle_unsubscribe_request( $this->authenticator->get_email(), $this->submission[ 'list' ] );
@@ -38,10 +38,11 @@ class Account_Management_Subscription_Request_Handler {
 		}
 	}
 
-	private function handle_subscribe_request( $email_address, $list_address ) {
+	private function handle_subscribe_request( $email_address, $list_address, $name = '' ) {
 		$submission_handler = new Submission_Handler( array(
 			'mailgun-lists' => array( $list_address ),
 			'mailgun-subscriber-email' => $email_address,
+			'mailgun-subscriber-name' => $name,
 		));
 		$submission_handler->handle_request();
 	}

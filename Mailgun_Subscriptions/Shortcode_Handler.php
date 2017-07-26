@@ -64,6 +64,7 @@ class Shortcode_Handler {
 		$atts = shortcode_atts(array(
 			'description' => '',
 			'lists' => '',
+			'name' => false,
 		), $atts);
 		if ( empty($atts['lists']) ) {
 			$lists = $this->get_visible_list_addresses();
@@ -76,6 +77,7 @@ class Shortcode_Handler {
 		$form->display(array(
 			'description' => $atts['description'],
 			'lists' => $lists,
+			'name' => wp_validate_boolean($atts['name']),
 		));
 		return ob_get_clean();
 	}
