@@ -59,7 +59,11 @@ class Submission_Handler {
 	}
 
 	protected function is_valid_email( $address ) {
-		$valid = Plugin::instance()->api( TRUE )->validate_email( $address );
+		if ( apply_filters( 'mailgun_subscriptions_validate_email_with_api', false ) ) {
+			$valid = Plugin::instance()->api( TRUE )->validate_email( $address );
+		} else {
+			$valid = is_email( $address );
+		}
 		if ( !$valid ) {
 			$this->error_details['invalid-email'][] = $address;
 		}

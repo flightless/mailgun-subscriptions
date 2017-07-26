@@ -91,3 +91,14 @@ The confirmation page is a standard WordPress Page. You can create your own, or 
 
 If a user visits the confirmation page without a valid confirmation URL, an error message will be displayed instead of the standard page contents.
 
+## Email Address Validation
+
+Email address are validated using WordPress's `is_email()` function. It validates the general form of the email address, but cannot handle some international domain names.
+
+To use the more robust email validation provided by the MailGun API, use the filter `mailgun_subscriptions_validate_email_with_api`. Example:
+
+```
+add_filter( 'mailgun_subscriptions_validate_email_with_api', '__return_true' );
+```
+
+Or you can use WordPress's `is_email` filter to apply your own validation.
