@@ -2,7 +2,7 @@
 Contributors: jbrinley
 Tags: mailing lists, subscriptions, widget, email
 Requires at least: 3.9
-Tested up to: 4.6
+Tested up to: 4.8
 Stable tag: 1.2.0
 License: GPL-2.0
 License URI: https://opensource.org/licenses/GPL-2.0
