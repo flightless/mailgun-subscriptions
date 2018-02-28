@@ -33,6 +33,19 @@ class Subscription_Form {
 		$form->show_form_message( $message_code, $error );
 	}
 
+	public static function ajax_request_handler() {
+		$handler = new Ajax_Submission_Handler( $_POST );
+		$handler->handle_request();
+		ob_start();
+		if ( ! empty( $_GET[ 'mailgun-message' ] ) ) {
+			do_action( 'mailgun_form_message', $_GET[ 'mailgun-message' ], ! empty( $_GET[ 'mailgun-error' ] ), new self() );
+		}
+		$response = ob_get_clean();
+		wp_send_json_success( array (
+			'message' => $response,
+		) );
+	}
+
 	/**
 	 * @param string $message
 	 * @param bool $error

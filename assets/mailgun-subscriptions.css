@@ -1,3 +1,20 @@
+.mailgun-subscription-form {
+	position: relative;
+}
+
+.mailgun-subscription-form .mailgun-ajax-loading-spinner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	background: rgba(255, 255, 255, 0.2) url('./spinner.gif') no-repeat center center;
+}
+
 .mailgun-subscription-form .mailgun-subscription-form-lists li {
 	margin-bottom: 0.5em;
 }
@@ -26,16 +43,20 @@
 .mailgun-subscription-account-management .mailgun-subscription-details {
 	margin: 0 0 1em;
 }
+
 .mailgun-subscription-account-management .mailgun-subscription-details h3 {
 	margin: 0 0 0.25em;
 }
+
 .mailgun-subscription-account-management .mailgun-subscription-details p {
 	margin: 0;
 	padding-left: 1em;
 }
+
 .mailgun-subscription-account-management .mailgun-subscription-details p.current-status {
 	padding-left: 0;
 }
+
 .mailgun-subscription-account-management .mailgun-subscription-details p.current-status::before {
 	display: inline-block;
 	width: .8em;
@@ -44,10 +65,12 @@
 	position: relative;
 	top: 1px;
 }
+
 .mailgun-subscription-account-management .mailgun-subscription-details p.subscribe.current-status::before {
 	content: '\2713'; /* check mark */
 	color: #23b225;
 }
+
 .mailgun-subscription-account-management .mailgun-subscription-details p.unsubscribe.current-status::before {
 	content: '\2717'; /* box with x */
 	color: #d42626;

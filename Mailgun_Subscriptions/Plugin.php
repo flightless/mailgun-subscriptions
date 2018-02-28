@@ -100,6 +100,7 @@ class Plugin {
 	private function setup_frontend_ui() {
 		add_action( 'mailgun_form_message', array( __NAMESPACE__.'\\Subscription_Form', 'form_message_callback' ), 10, 3 );
 		add_action( 'mailgun_form_content', array( __NAMESPACE__.'\\Subscription_Form', 'form_contents_callback' ), 10, 2 );
+		add_action( 'wp_ajax_mailgun_subscribe', array( __NAMESPACE__.'\\Subscription_Form', 'ajax_request_handler' ), 10, 0 );
 		$this->setup_widget();
 		$this->setup_shortcodes();
 		$this->setup_account_management_page();
@@ -112,6 +113,16 @@ class Plugin {
 		if ( $css_path ) {
 			wp_enqueue_style( 'mailgun-subscriptions', $css_path, array(), self::VERSION );
 		}
+		$js_path = plugins_url( 'assets/mailgun-subscriptions.js', dirname(__FILE__ ) );
+		$js_path = apply_filters( 'mailgun_js_path', $js_path );
+		if ( $js_path ) {
+			wp_enqueue_script( 'mailgun-subscriptions', $js_path, array( 'jquery' ), self::VERSION, true );
+		}
+
+		$js_data = apply_filters( 'mailgun_subscriptions_js_config', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+		wp_localize_script( 'mailgun-subscriptions', 'MailgunSubscriptions', $js_data );
 	}
 
 	private function setup_admin_page() {
