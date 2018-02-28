@@ -9,9 +9,9 @@ namespace Mailgun_Subscriptions;
  * Sets up and displays the account management page
  */
 class Account_Management_Page {
-	const SHORTCODE = 'mailgun_account_management';
+	const SHORTCODE            = 'mailgun_account_management';
 	const ACTION_REQUEST_TOKEN = 'request-token';
-	const EMAIL_ADDRESS_FIELD = 'mailgun_account_management_email_address';
+	const EMAIL_ADDRESS_FIELD  = 'mailgun_account_management_email_address';
 	private $page_id = 0;
 	/** @var Account_Management_Page_Authenticator */
 	private $authenticator = null;
@@ -35,13 +35,14 @@ class Account_Management_Page {
 	}
 
 	public function get_page_url() {
-		$id = $this->get_page_id_option();
+		$id  = $this->get_page_id_option();
 		$url = get_permalink( $id );
+
 		return $url;
 	}
 
 	private function get_page_id_option() {
-		return (int)get_option( Admin_Page::OPTION_ACCOUNT_PAGE, 0 );
+		return (int) get_option( Admin_Page::OPTION_ACCOUNT_PAGE, 0 );
 	}
 
 	/**
@@ -51,10 +52,10 @@ class Account_Management_Page {
 	 */
 	public function create_default_page() {
 		$this->page_id = wp_insert_post( array(
-			'post_type' => 'page',
-			'post_title' => __( 'Subscription Management', 'mailgun-subscriptions' ),
+			'post_type'   => 'page',
+			'post_title'  => __( 'Subscription Management', 'mailgun-subscriptions' ),
 			'post_status' => 'publish',
-		));
+		) );
 		update_option( Admin_Page::OPTION_ACCOUNT_PAGE, $this->page_id );
 	}
 
@@ -69,10 +70,10 @@ class Account_Management_Page {
 	 */
 	public function do_not_cache() {
 		nocache_headers(); // reverse proxies, browsers
-		if ( !defined('DONOTCACHEPAGE') ) {
-			define('DONOTCACHEPAGE', TRUE); // W3TC, supercache
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true ); // W3TC, supercache
 		}
-		if ( function_exists('batcache_cancel') ) {
+		if ( function_exists( 'batcache_cancel' ) ) {
 			batcache_cancel(); // batcache
 		}
 	}
@@ -82,10 +83,10 @@ class Account_Management_Page {
 			return;
 		}
 		if ( isset( $_GET[ Account_Management_Page_Authenticator::EMAIL_ARG ] ) && isset( $_GET[ Account_Management_Page_Authenticator::HASH_ARG ] ) ) {
-			$expiration = time() + apply_filters( 'mailgun_subscriptions_auth_cookie_expiration', 14 * DAY_IN_SECONDS );
+			$expiration   = time() + apply_filters( 'mailgun_subscriptions_auth_cookie_expiration', 14 * DAY_IN_SECONDS );
 			$cookie_value = array(
 				Account_Management_Page_Authenticator::EMAIL_ARG => $_GET[ Account_Management_Page_Authenticator::EMAIL_ARG ],
-				Account_Management_Page_Authenticator::HASH_ARG => $_GET[ Account_Management_Page_Authenticator::HASH_ARG ]
+				Account_Management_Page_Authenticator::HASH_ARG  => $_GET[ Account_Management_Page_Authenticator::HASH_ARG ],
 			);
 			$cookie_value = json_encode( $cookie_value );
 			setcookie(
@@ -113,6 +114,7 @@ class Account_Management_Page {
 	 * Spoof the global $post to hold just a shortcode for the account management page
 	 *
 	 * @param \WP_Post $post A reference to the global post object
+	 *
 	 * @return void
 	 */
 	public function setup_postdata( $post ) {
@@ -120,9 +122,9 @@ class Account_Management_Page {
 			return;
 		}
 
-		$GLOBALS['pages'] = array( sprintf( '[%s]', self::SHORTCODE ) );
-		$GLOBALS['numpages'] = 1;
-		$GLOBALS['multipage'] = 0;
+		$GLOBALS[ 'pages' ]     = array( sprintf( '[%s]', self::SHORTCODE ) );
+		$GLOBALS[ 'numpages' ]  = 1;
+		$GLOBALS[ 'multipage' ] = 0;
 	}
 
 	public function get_page_contents() {
@@ -138,6 +140,7 @@ class Account_Management_Page {
 				$content = $this->get_empty_page_content();
 				break;
 		}
+
 		return $content;
 	}
 
@@ -147,17 +150,18 @@ class Account_Management_Page {
 			// special case when subscribing to a new list
 			$messages[] = 'submitted';
 		}
+
 		return $messages;
 	}
 
 	private function get_account_page_content( $email_address ) {
-		$lists = $this->get_subscribed_lists( $email_address );
+		$lists    = $this->get_subscribed_lists( $email_address );
 		$base_url = $this->get_page_url();
 		ob_start();
 		echo '<div class="mailgun-subscription-account-management">';
 
 		$messages = $this->get_message_codes();
-		if ( !empty( $messages ) ) {
+		if ( ! empty( $messages ) ) {
 			$this->show_form_messages( $messages );
 		}
 
@@ -165,20 +169,20 @@ class Account_Management_Page {
 		printf( __( 'Email Address: <strong>%s</strong>', 'mailgun-subscriptions' ), esc_html( $email_address ) );
 		echo '</p>';
 		foreach ( $lists as $list_address => $list ) {
-			$subscribe_url = add_query_arg( array(
+			$subscribe_url   = add_query_arg( array(
 				'mailgun-action' => 'account-subscribe',
-				'list' => $list_address,
-				'nonce' => wp_create_nonce( 'account-subscribe' ),
+				'list'           => $list_address,
+				'nonce'          => wp_create_nonce( 'account-subscribe' ),
 			), $base_url );
 			$unsubscribe_url = add_query_arg( array(
 				'mailgun-action' => 'account-unsubscribe',
-				'list' => $list_address,
-				'nonce' => wp_create_nonce( 'account-unsubscribe' ),
+				'list'           => $list_address,
+				'nonce'          => wp_create_nonce( 'account-unsubscribe' ),
 			), $base_url );
 			$resubscribe_url = add_query_arg( array(
 				'mailgun-action' => 'account-resubscribe',
-				'list' => $list_address,
-				'nonce' => wp_create_nonce( 'account-resubscribe' ),
+				'list'           => $list_address,
+				'nonce'          => wp_create_nonce( 'account-resubscribe' ),
 			), $base_url );
 			echo '<div class="mailgun-subscription-details">';
 			echo '<h3>', esc_html( $list[ 'name' ] ), '</h3>';
@@ -200,6 +204,7 @@ class Account_Management_Page {
 			echo '</div>';
 		}
 		echo '</div>';
+
 		return ob_get_clean();
 	}
 
@@ -258,75 +263,81 @@ class Account_Management_Page {
 	}
 
 	private function get_subscribed_lists( $email_address ) {
-		$api = Plugin::instance()->api();
+		$api   = Plugin::instance()->api();
 		$lists = Plugin::instance()->get_lists( 'name' );
 		$lists = wp_list_filter( $lists, array( 'hidden' => true ), 'NOT' );
 		foreach ( $lists as $list_address => &$list ) {
-			$list[ 'member' ] = false;
+			$list[ 'member' ]       = false;
 			$list[ 'suppressions' ] = array();
-			$path = sprintf( 'lists/%s/members/%s', $list_address, $email_address );
-			$response = $api->get( $path );
+			$path                   = sprintf( 'lists/%s/members/%s', $list_address, $email_address );
+			$response               = $api->get( $path );
 			if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
-				$body = wp_remote_retrieve_body( $response );
-				$list[ 'member' ] = true;
-				$list[ 'subscribed' ] = !empty( $body->member->subscribed );
+				$body                   = wp_remote_retrieve_body( $response );
+				$list[ 'member' ]       = true;
+				$list[ 'subscribed' ]   = ! empty( $body->member->subscribed );
 				$list[ 'suppressions' ] = $this->get_suppressions( $email_address, $list_address );
 			}
 		}
+
 		return $lists;
 	}
 
 	private function get_suppressions( $email_address, $list_address ) {
 		$suppressions = Suppressions::instance( $email_address );
+
 		return array(
-			Suppressions::BOUNCES => $suppressions->has_bounces( $list_address ),
-			Suppressions::COMPLAINTS => $suppressions->has_complaints( $list_address ),
+			Suppressions::BOUNCES      => $suppressions->has_bounces( $list_address ),
+			Suppressions::COMPLAINTS   => $suppressions->has_complaints( $list_address ),
 			Suppressions::UNSUBSCRIBES => $suppressions->has_unsubscribes( $list_address ),
 		);
 	}
 
 	private function get_invalid_hash_content() {
-		$email = $this->authenticator->get_email();
+		$email  = $this->authenticator->get_email();
 		$errors = array( 'invalid-hash' );
+
 		return $this->get_request_email_form( $email, $errors );
 	}
 
 	private function get_empty_page_content() {
 		$messages = $this->get_message_codes();
+
 		return $this->get_request_email_form( '', $messages );
 	}
 
 	private function get_request_email_form( $default_address = '', $errors = array() ) {
 		ob_start();
 
-		if ( !empty( $errors ) ) {
+		if ( ! empty( $errors ) ) {
 			$this->show_form_messages( $errors );
 		}
 		?>
 		<form action="" method="post">
 			<?php wp_nonce_field( self::ACTION_REQUEST_TOKEN ); ?>
-			<input type="hidden" value="<?php echo self::ACTION_REQUEST_TOKEN; ?>" name="mailgun-action" />
+			<input type="hidden" value="<?php echo self::ACTION_REQUEST_TOKEN; ?>" name="mailgun-action"/>
 			<p><?php _e( "Fill in your email address below and we'll send you a link to log in and manage your account.", 'mailgun-subscriptions' ); ?></p>
-			<p><input type="text" value="<?php echo esc_attr( $default_address ); ?>" name="<?php echo self::EMAIL_ADDRESS_FIELD; ?>" placeholder="<?php esc_attr_e( 'e-mail address', 'mailgun-subscriptions' ); ?>" /></p>
-			<p><input type="submit" value="<?php esc_attr_e( 'Send e-mail', 'mailgun-subscriptions' ); ?>" /></p>
+			<p><input type="text" value="<?php echo esc_attr( $default_address ); ?>"
+								name="<?php echo self::EMAIL_ADDRESS_FIELD; ?>"
+								placeholder="<?php esc_attr_e( 'e-mail address', 'mailgun-subscriptions' ); ?>"/></p>
+			<p><input type="submit" value="<?php esc_attr_e( 'Send e-mail', 'mailgun-subscriptions' ); ?>"/></p>
 		</form>
 		<?php
 		return ob_get_clean();
 	}
 
 	protected function show_form_messages( $message ) {
-		if ( !is_array($message) ) {
-			$message = array($message);
+		if ( ! is_array( $message ) ) {
+			$message = array( $message );
 		}
 		foreach ( $message as $code ) {
-			echo '<p class="mailgun-message">', $this->get_message_string($code), '</p>';
+			echo '<p class="mailgun-message">', $this->get_message_string( $code ), '</p>';
 		}
 	}
 
 	protected function get_message_string( $code ) {
 		switch ( $code ) {
 			case 'submitted':
-				return __('Please check your email for a link to confirm your subscription.', 'mailgun-subscriptions');
+				return __( 'Please check your email for a link to confirm your subscription.', 'mailgun-subscriptions' );
 			case 'subscription-updated':
 				return __( 'Subscription updated.', 'mailgun-subscriptions' );
 			case 'request-submitted':
@@ -344,6 +355,7 @@ class Account_Management_Page {
 				break;
 		}
 		$message = apply_filters( 'mailgun_message', $message, $code, 'widget' );
+
 		return $message;
 	}
 }

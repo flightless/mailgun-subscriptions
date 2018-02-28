@@ -6,23 +6,27 @@ namespace Mailgun_Subscriptions;
 
 class Mailing_List {
 	private $address = '';
+
 	public function __construct( $address ) {
-		$this->address = trim($address);
+		$this->address = trim( $address );
 	}
 
 	public function exists() {
 		$settings = $this->get_settings();
-		return $settings !== FALSE;
+
+		return $settings !== false;
 	}
 
 	public function get_description() {
 		$settings = $this->get_settings();
-		return $this->exists() ? $settings['description'] : '';
+
+		return $this->exists() ? $settings[ 'description' ] : '';
 	}
 
 	public function get_name() {
 		$settings = $this->get_settings();
-		return $this->exists() ? $settings['name'] : '';
+
+		return $this->exists() ? $settings[ 'name' ] : '';
 	}
 
 	public function get_address() {
@@ -31,19 +35,20 @@ class Mailing_List {
 
 	public function is_hidden() {
 		$settings = $this->get_settings();
-		return $this->exists() ? (bool)$settings['hidden'] : FALSE;
+
+		return $this->exists() ? (bool) $settings[ 'hidden' ] : false;
 	}
 
 	protected function get_settings() {
-		$settings = get_option('mailgun_lists');
-		if ( isset($settings[$this->address]) ) {
-			return wp_parse_args($settings[$this->address], array(
-				'hidden' => FALSE,
-				'name' => '',
+		$settings = get_option( 'mailgun_lists' );
+		if ( isset( $settings[ $this->address ] ) ) {
+			return wp_parse_args( $settings[ $this->address ], array(
+				'hidden'      => false,
+				'name'        => '',
 				'description' => '',
-			));
+			) );
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 } 

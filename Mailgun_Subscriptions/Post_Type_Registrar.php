@@ -15,18 +15,19 @@ class Post_Type_Registrar {
 	 */
 	protected function confirmation_post_type_args() {
 		$args = array(
-			'label' => __( 'Mailgun Confirmation', 'mailgun-subscriptions' ),
-			'public' => false,
+			'label'        => __( 'Mailgun Confirmation', 'mailgun-subscriptions' ),
+			'public'       => false,
 			'map_meta_cap' => true,
 			'hierarchical' => false,
-			'supports' => array('title'),
-			'rewrite' => false,
-			'query_var' => false,
-			'can_export' => true,
-			'ep_mask' => EP_NONE,
+			'supports'     => array( 'title' ),
+			'rewrite'      => false,
+			'query_var'    => false,
+			'can_export'   => true,
+			'ep_mask'      => EP_NONE,
 		);
 
-		$args = apply_filters('mailgun_subscriptions_post_type_args', $args);
+		$args = apply_filters( 'mailgun_subscriptions_post_type_args', $args );
+
 		return $args;
 	}
 }

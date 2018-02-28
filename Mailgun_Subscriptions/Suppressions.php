@@ -24,7 +24,7 @@ class Suppressions {
 
 	public function __construct( $email_address ) {
 		$this->email_address = $email_address;
-		$this->api = Plugin::instance()->api();
+		$this->api           = Plugin::instance()->api();
 	}
 
 	public function has_bounces( $list ) {
@@ -59,31 +59,35 @@ class Suppressions {
 
 	private function extract_domain( $list ) {
 		$parts = explode( '@', $list );
+
 		return end( $parts );
 	}
 
 	private function has_suppressions( $type, $list ) {
 		$suppressions = $this->get_suppressions( $type, $list );
-		return !empty( $suppressions );
+
+		return ! empty( $suppressions );
 	}
 
 	private function clear_suppressions( $type, $list ) {
-		$domain = $this->extract_domain( $list );
+		$domain   = $this->extract_domain( $list );
 		$endpoint = $this->get_endpoint( $type, $domain );
 		$response = $this->api->delete( $endpoint );
 
-		if ( !$response || $response[ 'response' ][ 'code' ] != 200 ) {
+		if ( ! $response || $response[ 'response' ][ 'code' ] != 200 ) {
 			return false;
 		}
 		unset( $this->suppressions[ $type ][ $domain ] );
+
 		return true;
 	}
 
 	private function get_suppressions( $type, $list ) {
 		$domain = $this->extract_domain( $list );
-		if ( !isset( $this->suppressions[ $type ][ $domain ] ) ) {
+		if ( ! isset( $this->suppressions[ $type ][ $domain ] ) ) {
 			$this->suppressions[ $type ][ $domain ] = $this->fetch_from_api( $type, $domain );
 		}
+
 		return $this->suppressions[ $type ][ $domain ];
 	}
 
@@ -91,7 +95,7 @@ class Suppressions {
 		$endpoint = $this->get_endpoint( $type, $domain );
 		$response = $this->api->get( $endpoint );
 
-		if ( !$response || $response[ 'response' ][ 'code' ] != 200 ) {
+		if ( ! $response || $response[ 'response' ][ 'code' ] != 200 ) {
 			return false;
 		}
 
@@ -106,14 +110,16 @@ class Suppressions {
 	 * Get an instance of this class for the given email address.
 	 * Works just like the constructor, but returns previously
 	 * used instances when possible to avoid extra API calls.
-	 * 
+	 *
 	 * @param string $email_address
+	 *
 	 * @return self
 	 */
 	public static function instance( $email_address ) {
-		if ( !isset( self::$instances[ $email_address ] ) ) {
+		if ( ! isset( self::$instances[ $email_address ] ) ) {
 			self::$instances[ $email_address ] = new self( $email_address );
 		}
+
 		return self::$instances[ $email_address ];
 	}
 }

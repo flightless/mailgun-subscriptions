@@ -8,36 +8,36 @@ class Plugin {
 	const VERSION = '1.2.0';
 
 	/** @var Plugin */
-	private static $instance = NULL;
+	private static $instance = null;
 
 	private static $plugin_file = '';
 
 	/** @var Admin_Page */
-	private $admin_page = NULL;
+	private $admin_page = null;
 
 	/** @var Submission_Handler */
-	private $submission_handler = NULL;
+	private $submission_handler = null;
 
 	/** @var Confirmation_Handler */
-	private $confirmation_handler = NULL;
+	private $confirmation_handler = null;
 
 	/** @var Shortcode_Handler */
-	private $shortcode_handler = NULL;
+	private $shortcode_handler = null;
 
 	/** @var Account_Management_Page */
-	private $account_management_page = NULL;
+	private $account_management_page = null;
 
 	/** @var Account_Management_Token_Request_Handler */
-	private $token_request_handler = NULL;
+	private $token_request_handler = null;
 
 	/** @var Account_Management_Subscription_Request_Handler */
-	private $account_manangement_subscription_handler = NULL;
+	private $account_manangement_subscription_handler = null;
 
-	public function api( $public = FALSE ) {
+	public function api( $public = false ) {
 		if ( $public ) {
-			return new API(get_option('mailgun_api_public_key'));
+			return new API( get_option( 'mailgun_api_public_key' ) );
 		} else {
-			return new API(get_option('mailgun_api_key'));
+			return new API( get_option( 'mailgun_api_key' ) );
 		}
 	}
 
@@ -74,9 +74,9 @@ class Plugin {
 		Cleanup::init();
 		$this->setup_frontend_ui();
 
-		if ( !is_admin() ) {
-			if ( !empty( $_REQUEST[ 'mailgun-action' ] ) ) {
-				switch( $_REQUEST[ 'mailgun-action' ] ) {
+		if ( ! is_admin() ) {
+			if ( ! empty( $_REQUEST[ 'mailgun-action' ] ) ) {
+				switch ( $_REQUEST[ 'mailgun-action' ] ) {
 					case 'subscribe':
 						$this->setup_submission_handler();
 						break;
@@ -98,9 +98,18 @@ class Plugin {
 	}
 
 	private function setup_frontend_ui() {
-		add_action( 'mailgun_form_message', array( __NAMESPACE__.'\\Subscription_Form', 'form_message_callback' ), 10, 3 );
-		add_action( 'mailgun_form_content', array( __NAMESPACE__.'\\Subscription_Form', 'form_contents_callback' ), 10, 2 );
-		add_action( 'wp_ajax_mailgun_subscribe', array( __NAMESPACE__.'\\Subscription_Form', 'ajax_request_handler' ), 10, 0 );
+		add_action( 'mailgun_form_message', array(
+			__NAMESPACE__ . '\\Subscription_Form',
+			'form_message_callback',
+		), 10, 3 );
+		add_action( 'mailgun_form_content', array(
+			__NAMESPACE__ . '\\Subscription_Form',
+			'form_contents_callback',
+		), 10, 2 );
+		add_action( 'wp_ajax_mailgun_subscribe', array(
+			__NAMESPACE__ . '\\Subscription_Form',
+			'ajax_request_handler',
+		), 10, 0 );
 		$this->setup_widget();
 		$this->setup_shortcodes();
 		$this->setup_account_management_page();
@@ -108,12 +117,12 @@ class Plugin {
 	}
 
 	public function enqueue_assets() {
-		$css_path = plugins_url( 'assets/mailgun-subscriptions.css', dirname(__FILE__) );
+		$css_path = plugins_url( 'assets/mailgun-subscriptions.css', dirname( __FILE__ ) );
 		$css_path = apply_filters( 'mailgun_css_path', $css_path );
 		if ( $css_path ) {
 			wp_enqueue_style( 'mailgun-subscriptions', $css_path, array(), self::VERSION );
 		}
-		$js_path = plugins_url( 'assets/mailgun-subscriptions.js', dirname(__FILE__ ) );
+		$js_path = plugins_url( 'assets/mailgun-subscriptions.js', dirname( __FILE__ ) );
 		$js_path = apply_filters( 'mailgun_js_path', $js_path );
 		if ( $js_path ) {
 			wp_enqueue_script( 'mailgun-subscriptions', $js_path, array( 'jquery' ), self::VERSION, true );
@@ -128,11 +137,11 @@ class Plugin {
 	private function setup_admin_page() {
 		$this->admin_page = new Admin_Page();
 		add_action( 'admin_menu', array( $this->admin_page, 'register' ), 10, 0 );
-		add_action( 'load-settings_page_'.Admin_Page::MENU_SLUG, array( $this->admin_page, 'refresh_caches' ), 10, 0 );
+		add_action( 'load-settings_page_' . Admin_Page::MENU_SLUG, array( $this->admin_page, 'refresh_caches' ), 10, 0 );
 	}
 
 	private function setup_widget() {
-		add_action( 'widgets_init', array( __NAMESPACE__.'\\Widget', 'register' ), 10, 0 );
+		add_action( 'widgets_init', array( __NAMESPACE__ . '\\Widget', 'register' ), 10, 0 );
 	}
 
 	public function setup_confirmations() {
@@ -141,19 +150,19 @@ class Plugin {
 	}
 
 	public function setup_confirmation_handler() {
-		$this->confirmation_handler = new Confirmation_Handler($_GET);
+		$this->confirmation_handler = new Confirmation_Handler( $_GET );
 		add_action( 'parse_request', array( $this->confirmation_handler, 'handle_request' ), 10, 0 );
 	}
 
 	private function setup_submission_handler() {
-		$this->submission_handler = new Submission_Handler($_POST);
+		$this->submission_handler = new Submission_Handler( $_POST );
 		add_action( 'parse_request', array( $this->submission_handler, 'handle_request' ), 10, 0 );
 	}
 
 	public function setup_confirmation_page() {
-		if ( is_page() && get_queried_object_id() == get_option('mailgun_confirmation_page', 0) ) {
+		if ( is_page() && get_queried_object_id() == get_option( 'mailgun_confirmation_page', 0 ) ) {
 
-			if ( !$this->confirmation_handler ) {
+			if ( ! $this->confirmation_handler ) {
 				$this->setup_confirmation_handler();
 				$this->confirmation_handler->handle_request(); // sets up error messages
 			}
@@ -186,22 +195,23 @@ class Plugin {
 		$lists = get_option( 'mailgun_lists', array() );
 		switch ( $orderby ) {
 			case 'name':
-				uasort($lists, array( $this, 'sort_by_name' ) );
+				uasort( $lists, array( $this, 'sort_by_name' ) );
 				break;
 			case 'address':
 			default:
-				asort($lists);
+				asort( $lists );
 				break;
 		}
+
 		return $lists;
 	}
 
 	public function sort_by_name( $a, $b ) {
-		if ( $a['name'] == $b['name'] ) {
+		if ( $a[ 'name' ] == $b[ 'name' ] ) {
 			return 0;
 		}
 
-		return ( $a['name'] > $b['name'] ) ? 1 : -1;
+		return ( $a[ 'name' ] > $b[ 'name' ] ) ? 1 : - 1;
 	}
 
 	public static function init( $file ) {
@@ -209,9 +219,10 @@ class Plugin {
 	}
 
 	public static function instance() {
-		if ( !isset(self::$instance) ) {
+		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
+
 		return self::$instance;
 	}
 } 

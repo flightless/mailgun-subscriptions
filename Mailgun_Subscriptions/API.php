@@ -7,88 +7,94 @@ namespace Mailgun_Subscriptions;
 class API {
 	private $key = '';
 	private $url = '';
+
 	public function __construct( $apiKey, $apiEndpoint = "api.mailgun.net", $apiVersion = "v3", $ssl = true ) {
 		$this->key = $apiKey;
 		$this->url = $this->build_base_url( $apiEndpoint, $apiVersion, $ssl );
 	}
 
 	public function get( $endpoint, $args = array() ) {
-		$url = $this->url . $endpoint;
+		$url      = $this->url . $endpoint;
 		$response = wp_remote_get(
 			$url,
 			array(
-				'body' => $args,
+				'body'    => $args,
 				'headers' => $this->get_request_headers(),
 			)
 		);
-		if ( is_wp_error($response) ) {
-			return FALSE;
+		if ( is_wp_error( $response ) ) {
+			return false;
 		}
-		$response['body'] = json_decode($response['body']);
+		$response[ 'body' ] = json_decode( $response[ 'body' ] );
+
 		return $response;
 	}
 
 	public function post( $endpoint, $args = array() ) {
-		$url = $this->url . $endpoint;
+		$url      = $this->url . $endpoint;
 		$response = wp_remote_post(
 			$url,
 			array(
-				'body' => $args,
+				'body'    => $args,
 				'headers' => $this->get_request_headers(),
 			)
 		);
-		if ( is_wp_error($response) ) {
-			return FALSE;
+		if ( is_wp_error( $response ) ) {
+			return false;
 		}
-		$response['body'] = json_decode($response['body']);
+		$response[ 'body' ] = json_decode( $response[ 'body' ] );
+
 		return $response;
 	}
 
 	public function put( $endpoint, $args = array() ) {
-		$url = $this->url . $endpoint;
+		$url      = $this->url . $endpoint;
 		$response = wp_remote_request(
 			$url,
 			array(
-				'body' => $args,
+				'body'    => $args,
 				'headers' => $this->get_request_headers(),
-				'method' => 'PUT',
+				'method'  => 'PUT',
 			)
 		);
-		if ( is_wp_error($response) ) {
-			return FALSE;
+		if ( is_wp_error( $response ) ) {
+			return false;
 		}
-		$response['body'] = json_decode($response['body']);
+		$response[ 'body' ] = json_decode( $response[ 'body' ] );
+
 		return $response;
 	}
 
 	public function delete( $endpoint, $args = array() ) {
-		$url = $this->url . $endpoint;
+		$url      = $this->url . $endpoint;
 		$response = wp_remote_request(
 			$url,
 			array(
-				'body' => $args,
+				'body'    => $args,
 				'headers' => $this->get_request_headers(),
-				'method' => 'DELETE',
+				'method'  => 'DELETE',
 			)
 		);
-		if ( is_wp_error($response) ) {
-			return FALSE;
+		if ( is_wp_error( $response ) ) {
+			return false;
 		}
-		$response['body'] = json_decode($response['body']);
+		$response[ 'body' ] = json_decode( $response[ 'body' ] );
+
 		return $response;
 	}
 
 	public function validate_email( $address ) {
 		$response = $this->get( 'address/validate', array(
 			'address' => $address,
-		));
-		if ( !$response || $response['response']['code'] != 200 ) {
-			return FALSE;
+		) );
+		if ( ! $response || $response[ 'response' ][ 'code' ] != 200 ) {
+			return false;
 		}
-		return $response['body']->is_valid;
+
+		return $response[ 'body' ]->is_valid;
 	}
 
-	private function build_base_url( $apiEndpoint = "api.mailgun.net", $apiVersion = "v2", $ssl = TRUE ) {
+	private function build_base_url( $apiEndpoint = "api.mailgun.net", $apiVersion = "v2", $ssl = true ) {
 		return 'http' . ( $ssl ? 's' : '' ) . '://' . $apiEndpoint . '/' . $apiVersion . '/';
 	}
 
@@ -99,6 +105,6 @@ class API {
 	}
 
 	private function get_auth_header_value() {
-		return 'Basic '.base64_encode( 'api:' . $this->key );
+		return 'Basic ' . base64_encode( 'api:' . $this->key );
 	}
 } 

@@ -11,7 +11,7 @@ class Ajax_Submission_Handler extends Submission_Handler {
 	}
 
 	protected function do_error_redirect() {
-		$_GET = array (
+		$_GET = array(
 			'mailgun-message' => $this->errors,
 			'mailgun-error'   => $this->transient_key,
 		);

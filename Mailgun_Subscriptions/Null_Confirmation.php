@@ -38,10 +38,10 @@ class Null_Confirmation extends Confirmation {
 	}
 
 	public function confirmed() {
-		return FALSE;
+		return false;
 	}
 
 	public function expired() {
-		return TRUE;
+		return true;
 	}
 } 

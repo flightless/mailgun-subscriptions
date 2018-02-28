@@ -13,8 +13,8 @@ class Account_Management_Page_Authenticator {
 	const NO_USER      = 1;
 	const INVALID_HASH = 2;
 
-	const EMAIL_ARG = 'email';
-	const HASH_ARG  = 'hash';
+	const EMAIL_ARG   = 'email';
+	const HASH_ARG    = 'hash';
 	const COOKIE_NAME = 'mailgun-account';
 
 	private $validation_result;
@@ -28,10 +28,10 @@ class Account_Management_Page_Authenticator {
 		} else {
 			$submission = array();
 		}
-		if ( !empty( $submission[ self::EMAIL_ARG ] ) ) {
+		if ( ! empty( $submission[ self::EMAIL_ARG ] ) ) {
 			$this->email_address = $submission[ self::EMAIL_ARG ];
 		}
-		if ( !empty( $submission[ self::HASH_ARG ] ) ) {
+		if ( ! empty( $submission[ self::HASH_ARG ] ) ) {
 			$this->hash = $submission[ self::HASH_ARG ];
 		}
 	}
@@ -49,6 +49,7 @@ class Account_Management_Page_Authenticator {
 			return $this->validation_result;
 		}
 		$this->validation_result = $this->do_validation();
+
 		return $this->validation_result;
 	}
 
@@ -59,11 +60,13 @@ class Account_Management_Page_Authenticator {
 		if ( ! $this->validate_hash() ) {
 			return self::INVALID_HASH;
 		}
+
 		return self::VALID;
 	}
 
 	private function validate_hash() {
 		$hash = new Account_Management_Hash( $this->email_address );
+
 		return $hash->get_hash() == $this->hash;
 	}
 }
