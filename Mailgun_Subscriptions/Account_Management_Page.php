@@ -326,23 +326,44 @@ class Account_Management_Page {
 	protected function get_message_string( $code ) {
 		switch ( $code ) {
 			case 'submitted':
-				return __( 'Please check your email for a link to confirm your subscription.', 'mailgun-subscriptions' );
+				$message = __( 'Please check your email for a link to confirm your subscription.', 'mailgun-subscriptions' );
+				break;
 			case 'subscription-updated':
-				return __( 'Subscription updated.', 'mailgun-subscriptions' );
+				$message = __( 'Subscription updated.', 'mailgun-subscriptions' );
+				break;
 			case 'request-submitted':
-				return __( 'Request submitted. Your email should be arriving shortly.', 'mailgun-subscriptions' );
+				$message = __( 'Request submitted. Your email should be arriving shortly.', 'mailgun-subscriptions' );
+				break;
 			case 'no-email':
-				return __( 'Please verify that you have entered your email address correctly.', 'mailgun-subscriptions' );
+				$message = __( 'Please verify that you have entered your email address correctly.', 'mailgun-subscriptions' );
+				break;
 			case 'invalid-nonce':
-				return __( 'We were unable to validate your request. Please try submitting the form again.', 'mailgun-subscriptions' );
+				$message = __( 'We were unable to validate your request. Please try submitting the form again.', 'mailgun-subscriptions' );
+				break;
 			case 'invalid-email':
-				return __( 'We did not understand your email address. Please try submitting the form again.', 'mailgun-subscriptions' );
+				$message = __( 'We did not understand your email address. Please try submitting the form again.', 'mailgun-subscriptions' );
+				break;
 			case 'invalid-hash':
-				return __( 'Your login URL has expired. Please request a new one.', 'mailgun-subscriptions' );
+				$message = __( 'Your login URL has expired. Please request a new one.', 'mailgun-subscriptions' );
+				break;
 			case 'new-email-submitted':
-				return __( 'Please check your email for a link to confirm your new address.', 'mailgun-subscriptions' );
+				$message = __( 'Please check your email for a link to confirm your new address.', 'mailgun-subscriptions' );
+				break;
 			case 'new-email-confirmed':
-				return __( 'Email address updated.', 'mailgun-subscriptions' );
+				$message = __( 'Email address updated.', 'mailgun-subscriptions' );
+				break;
+			case 'not_found':
+				$message = __( 'Your request could not be found. Please try again.', 'mailgun-subscriptions' );
+				break;
+			case 'already_confirmed':
+				$message = __( 'You have already confirmed your request.', 'mailgun-subscriptions' );
+				break;
+			case 'expired':
+				$message = __( 'Your request has expired. Please try again.', 'mailgun-subscriptions' );
+				break;
+			case 'address_change_failed':
+				$message = __( 'We experienced a problem changing one or more subscriptions. Please try again.', 'mailgun-subscriptions' );
+				break;
 			default:
 				$message = '';
 				break;
