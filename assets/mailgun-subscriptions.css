@@ -75,3 +75,21 @@
 	content: '\2717'; /* box with x */
 	color: #d42626;
 }
+
+.mailgun-change-email .mailgun-change-email-controls {
+	display: none;
+}
+
+.mailgun-change-email .mailgun-change-email-controls input[type="text"] {
+	width: auto;
+}
+
+.mailgun-change-email .mailgun-change-email-controls input[type="submit"] {
+	margin-left: 1em;
+}
+
+.mailgun-change-email .mailgun-current-email input[type=button] {
+	font-size: 70%;
+	text-transform: none;
+	margin-left: 1em;
+}

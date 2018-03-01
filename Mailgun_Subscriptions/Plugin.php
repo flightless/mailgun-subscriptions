@@ -30,6 +30,9 @@ class Plugin {
 	/** @var Account_Management_Token_Request_Handler */
 	private $token_request_handler = null;
 
+	/** @var Change_Email_Request_Handler */
+	private $change_email_handler = null;
+
 	/** @var Account_Management_Subscription_Request_Handler */
 	private $account_manangement_subscription_handler = null;
 
@@ -90,6 +93,10 @@ class Plugin {
 					case 'account-resubscribe':
 					case 'account-unsubscribe':
 						$this->setup_account_management_handler();
+						break;
+					case 'change-email':
+					case 'confirm-change-email':
+						$this->setup_change_email_handler();
 						break;
 				}
 			}
@@ -189,6 +196,11 @@ class Plugin {
 	public function setup_account_management_handler() {
 		$this->account_manangement_subscription_handler = new Account_Management_Subscription_Request_Handler( $_GET, new Account_Management_Page_Authenticator( $_COOKIE ) );
 		add_action( 'parse_request', array( $this->account_manangement_subscription_handler, 'handle_request' ), 10, 0 );
+	}
+
+	public function setup_change_email_handler() {
+		$this->change_email_handler = new Change_Email_Request_Handler( $_REQUEST, new Account_Management_Page_Authenticator( $_COOKIE ) );
+		add_action( 'parse_request', array( $this->change_email_handler, 'handle_request' ), 10, 0 );
 	}
 
 	public function get_lists( $orderby = 'address' ) {

@@ -20,4 +20,8 @@ abstract class Template {
 	public static function token_email() {
 		return __( "To manage your subscriptions, visit:\n\n[link]", 'mailgun-subscriptions' );
 	}
+
+	public static function change_email() {
+		return __( "To confirm your change of email address to [email], visit:\n\n[link]", 'mailgun-subscriptions' );
+	}
 }

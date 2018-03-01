@@ -1,9 +1,9 @@
 (function ( $, window ) {
 	$( document ).ready( function ( $ ) {
-		var ajaxurl    = window.MailgunSubscriptions.ajaxurl;
-		var spinnerurl = window.MailgunSubscriptions.spinnerurl;
+		var ajaxurl = window.MailgunSubscriptions.ajaxurl;
 
-		$( '.widget.mailgun-subscriptions' ).on( 'submit', function ( e ) {
+		var subscriptionWidget = $( '.widget.mailgun-subscriptions' );
+		subscriptionWidget.on( 'submit', function ( e ) {
 			e.preventDefault();
 
 			var messages = $( this ).find( '.mailgun-message' );
@@ -39,5 +39,15 @@
 					spinner.remove();
 				} );
 		} );
+	} );
+
+	var changeEmail = $( '.mailgun-change-email' );
+	changeEmail.on( 'click', '.mailgun-current-email input[type=button]', function ( e ) {
+		e.preventDefault();
+		var change  = changeEmail.find( '.mailgun-change-email-controls' );
+		var current = changeEmail.find( '.mailgun-current-email' );
+		current.hide();
+		change.show();
+		change.find( 'input[name="mailgun-subscriber-email"]' ).focus();
 	} );
 })( jQuery, window );

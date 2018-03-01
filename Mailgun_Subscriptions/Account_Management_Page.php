@@ -165,9 +165,23 @@ class Account_Management_Page {
 			$this->show_form_messages( $messages );
 		}
 
-		echo '<p>';
-		printf( __( 'Email Address: <strong>%s</strong>', 'mailgun-subscriptions' ), esc_html( $email_address ) );
-		echo '</p>';
+		?>
+		<form class="mailgun-change-email" action="<?php echo esc_url( $base_url ); ?>" method="post">
+			<?php wp_nonce_field( 'change-email', 'nonce' ); ?>
+			<input type="hidden" name="mailgun-action" value="change-email" />
+			<p>
+				<label for="mailgun-subscriber-email"><?php _e( 'Email address: ', 'mailgun-subscriptions' ); ?></label>
+				<span class="mailgun-change-email-controls">
+					<input type="text" name="mailgun-subscriber-email" id="mailgun-subscriber-email" size="20" required value="<?php echo esc_attr( $email_address ); ?>" />
+					<input type="submit" value="<?php _e( 'Submit', 'mailgun-subscriptions' ); ?>" />
+				</span>
+				<span class="mailgun-current-email">
+					<strong><?php echo esc_html( $email_address ); ?></strong>
+					<input type="button" value="<?php _e( 'Change', 'mailgun-subscriptions' ); ?>" />
+				</span>
+			</p>
+		</form>
+		<?php
 		foreach ( $lists as $list_address => $list ) {
 			$subscribe_url   = add_query_arg( array(
 				'mailgun-action' => 'account-subscribe',
@@ -263,33 +277,8 @@ class Account_Management_Page {
 	}
 
 	private function get_subscribed_lists( $email_address ) {
-		$api   = Plugin::instance()->api();
-		$lists = Plugin::instance()->get_lists( 'name' );
-		$lists = wp_list_filter( $lists, array( 'hidden' => true ), 'NOT' );
-		foreach ( $lists as $list_address => &$list ) {
-			$list[ 'member' ]       = false;
-			$list[ 'suppressions' ] = array();
-			$path                   = sprintf( 'lists/%s/members/%s', $list_address, $email_address );
-			$response               = $api->get( $path );
-			if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
-				$body                   = wp_remote_retrieve_body( $response );
-				$list[ 'member' ]       = true;
-				$list[ 'subscribed' ]   = ! empty( $body->member->subscribed );
-				$list[ 'suppressions' ] = $this->get_suppressions( $email_address, $list_address );
-			}
-		}
-
-		return $lists;
-	}
-
-	private function get_suppressions( $email_address, $list_address ) {
-		$suppressions = Suppressions::instance( $email_address );
-
-		return array(
-			Suppressions::BOUNCES      => $suppressions->has_bounces( $list_address ),
-			Suppressions::COMPLAINTS   => $suppressions->has_complaints( $list_address ),
-			Suppressions::UNSUBSCRIBES => $suppressions->has_unsubscribes( $list_address ),
-		);
+		$member = new List_Member( $email_address );
+		return $member->get_subscribed_lists();
 	}
 
 	private function get_invalid_hash_content() {
@@ -350,6 +339,10 @@ class Account_Management_Page {
 				return __( 'We did not understand your email address. Please try submitting the form again.', 'mailgun-subscriptions' );
 			case 'invalid-hash':
 				return __( 'Your login URL has expired. Please request a new one.', 'mailgun-subscriptions' );
+			case 'new-email-submitted':
+				return __( 'Please check your email for a link to confirm your new address.', 'mailgun-subscriptions' );
+			case 'new-email-confirmed':
+				return __( 'Email address updated.', 'mailgun-subscriptions' );
 			default:
 				$message = '';
 				break;
