@@ -121,10 +121,19 @@ class Account_Management_Page {
 		if ( $post->ID != $this->page_id ) {
 			return;
 		}
+		$pages = (array) $GLOBALS[ 'pages' ];
 
-		$GLOBALS[ 'pages' ]     = array( sprintf( '[%s]', self::SHORTCODE ) );
-		$GLOBALS[ 'numpages' ]  = 1;
-		$GLOBALS[ 'multipage' ] = 0;
+		$shortcode = sprintf( '[%s]', self::SHORTCODE );
+
+		$first_page = array_shift( $pages );
+		if ( strpos( $first_page, $shortcode) !== false ) {
+			return; // nothing more to do, the user added it manually
+		}
+
+		$first_page = empty( $first_page ) ? $shortcode : "$first_page\n\n$shortcode";
+		array_unshift( $pages, $first_page );
+
+		$GLOBALS[ 'pages' ]     = $pages;
 	}
 
 	public function get_page_contents() {
