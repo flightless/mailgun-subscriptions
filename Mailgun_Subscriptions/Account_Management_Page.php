@@ -170,14 +170,10 @@ class Account_Management_Page {
 			<?php wp_nonce_field( 'change-email', 'nonce' ); ?>
 			<input type="hidden" name="mailgun-action" value="change-email" />
 			<p>
-				<label for="mailgun-subscriber-email"><?php _e( 'Email address: ', 'mailgun-subscriptions' ); ?></label>
+				<label for="mailgun-subscriber-email"><?php _e( 'Change email address: ', 'mailgun-subscriptions' ); ?></label>
 				<span class="mailgun-change-email-controls">
-					<input type="text" name="mailgun-subscriber-email" id="mailgun-subscriber-email" size="20" required value="<?php echo esc_attr( $email_address ); ?>" />
+					<input type="text" name="mailgun-subscriber-email" id="mailgun-subscriber-email" size="30" required value="<?php echo esc_attr( $email_address ); ?>" />
 					<input type="submit" value="<?php _e( 'Submit', 'mailgun-subscriptions' ); ?>" />
-				</span>
-				<span class="mailgun-current-email">
-					<strong><?php echo esc_html( $email_address ); ?></strong>
-					<input type="button" value="<?php _e( 'Change', 'mailgun-subscriptions' ); ?>" />
 				</span>
 			</p>
 		</form>

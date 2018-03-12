@@ -76,10 +76,6 @@
 	color: #d42626;
 }
 
-.mailgun-change-email .mailgun-change-email-controls {
-	display: none;
-}
-
 .mailgun-change-email .mailgun-change-email-controls input[type="text"] {
 	width: auto;
 }
