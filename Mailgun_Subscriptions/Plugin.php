@@ -117,6 +117,10 @@ class Plugin {
 			__NAMESPACE__ . '\\Subscription_Form',
 			'ajax_request_handler',
 		), 10, 0 );
+		add_action( 'wp_ajax_nopriv_mailgun_subscribe', array(
+			__NAMESPACE__ . '\\Subscription_Form',
+			'ajax_request_handler',
+		), 10, 0 );
 		$this->setup_widget();
 		$this->setup_shortcodes();
 		$this->setup_account_management_page();
