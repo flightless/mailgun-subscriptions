@@ -23,7 +23,7 @@ class Account_Management_Subscription_Request_Handler {
 		if ( $this->is_valid_submission() ) {
 			switch ( $this->action ) {
 				case 'account-subscribe':
-					$this->handle_subscribe_request( $this->authenticator->get_email(), $this->submission[ 'list' ], $this->submission[ 'name' ] );
+					$this->handle_subscribe_request( $this->authenticator->get_email(), $this->submission[ 'list' ] );
 					break;
 				case 'account-unsubscribe':
 					$this->handle_unsubscribe_request( $this->authenticator->get_email(), $this->submission[ 'list' ] );
