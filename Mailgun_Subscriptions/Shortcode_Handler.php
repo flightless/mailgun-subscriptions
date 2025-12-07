@@ -77,7 +77,7 @@ class Shortcode_Handler {
 		$form = new Subscription_Form();
 		ob_start();
 		$form->display( array(
-			'description' => $atts[ 'description' ],
+			'description' => wp_kses_post($atts[ 'description' ]),
 			'lists'       => $lists,
 			'name'        => wp_validate_boolean( $atts[ 'name' ] ),
 		) );
@@ -97,4 +97,4 @@ class Shortcode_Handler {
 
 		return $page->get_page_contents();
 	}
-} 
+}
